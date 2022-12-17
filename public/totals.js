@@ -1,13 +1,31 @@
 function getTotals(){
-    const athleteStats = JSON.parse(localStorage.getItem('athlete'));
-    const totals = {};
-    totals.ytd_total_climb = athleteStats.ytd_ride_totals.elevation_gain + athleteStats.ytd_run_totals.elevation_gain;
-    totals.ytd_total_distance = athleteStats.ytd_ride_totals.distance + athleteStats.ytd_run_totals.distance + athleteStats.ytd_swim_totals.distance;
-    totals.ytd_ride_climb = athleteStats.ytd_ride_totals.elevation_gain;
-    totals.ytd_run_climb = athleteStats.ytd_run_totals.elevation_gain;
-    totals.ytd_ride_distance = athleteStats.ytd_ride_totals.distance;
-    totals.ytd_run_distance = athleteStats.ytd_run_totals.distance;
-    totals.ytd_swim_distance = athleteStats.ytd_swim_totals.distance;
+    const totals = {
+        ytd_total_climb : 0,
+        ytd_total_distance : 0,
+        ytd_ride_climb : 0,
+        ytd_ride_distance : 0,
+        ytd_run_distance : 0,
+        ytd_ride_distance : 0,
+        ytd_swim_distance : 0
+    };
+    const activities = JSON.parse(localStorage.getItem('activities'));
+    for(const activity of activities){
+        totals.ytd_total_climb = totals.ytd_total_climb + activity.total_elevation_gain;
+        totals.ytd_total_distance = totals.ytd_total_distance + activity.distance;
+        if(activity.type === "Ride"){
+            totals.ytd_ride_climb = totals.ytd_ride_climb + activity.total_elevation_gain;
+            totals.ytd_ride_distance = totals.ytd_ride_distance + activity.distance;
+        } else {
+            if(activity.type === "Run"){
+                totals.ytd_run_distance = totals.ytd_run_distance + activity.total_elevation_gain;
+                totals.ytd_run_distance = totals.ytd_run_distance + activity.distance;
+            } else {
+                if(activity.type === "Swim"){
+                    totals.ytd_swim_distance = totals.ytd_swim_distance + activity.distance;
+                }
+            }
+        }
+    }
     return totals;
 }
 
