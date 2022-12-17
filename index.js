@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const http = require('node:http');
 const bodyParser = require('body-parser');
 const path = require('node:path');
 const axios = require('axios');
@@ -8,12 +8,12 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-const website = express.Router();
-website.use(express.static(path.join(__dirname, 'public')));
+const router = express.Router();
+router.use(express.static(path.join(__dirname, 'public')));
 
 const usersCredentials = {};
 
-website.get('/token', (req, res) => {
+router.get('/token', (req, res) => {
     if(!('code' in req.query)){
         res.status(400).end;
     }
@@ -38,7 +38,7 @@ website.get('/token', (req, res) => {
         })
 })
 
-website.get('/refresh', (req, res) => {
+router.get('/refresh', (req, res) => {
     if(!('userId' in req.query)){
         res.status(400).end();
     }
@@ -64,10 +64,8 @@ website.get('/refresh', (req, res) => {
         })
 })
 
-app.use('', website);
+app.use('', router);
 const server = http.createServer(app);
-server.listen(process.env.npm_config_port);
-
-console.log(process.env.npm_config_port);
+server.listen(8080);
 
 server.on('listening', () => console.log(`Listening on port ${server.address().port}`))

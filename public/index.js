@@ -1,22 +1,107 @@
-document.querySelector('body #accountAuthButton').addEventListener('click', () => {
-    let url = new URL(window.location.href);
-    if(url.searchParams.get("code")){
-        console.log("Authenticated user");
-        const code = url.searchParams.get("code");
-        fetch(`/token?code=${code}`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'GET'
-        }).then(response => {
-                response.json()
-                    .then(res => {
-                        console.log(res);
-                    });
-            }
-        )
+async function main() {
+    if(sessionStorage.getItem('user_token') !== null){ // If we have a token, user already accepted oauth
+        const token = sessionStorage.getItem('user_token');
+        const expires = sessionStorage.getItem('token_expires')
+        if(Date.now() - 30*60*1000 < expires){ // If token expired, refreshes it
+            await refreshToken(token);
+        }
     } else {
-        window.location.href = "https://www.strava.com/oauth/authorize?client_id=56606&redirect_uri=http://localhost:8080&response_type=code&scope=read_all,profile:read_all,activity:read_all";
+        const url = new URL(window.location.href); // If there is code in the url, the user just authorized from oauth page
+        if(url.searchParams.get("code")){
+            const code = url.searchParams.get("code");
+            await getUserToken(code);
+        } else {
+            window.location.pathname = '/login.html'; // If none of these conditions, redirect to login page
+        }
     }
-})
+}
+
+async function refreshToken(token){
+    const response = await fetch(`/refresh?userId=${userId}`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    });
+    const res = await response.json();
+    sessionStorage.setItem('user_token', res.token);
+    sessionStorage.setItem('token_expires', res.expires);
+}
+
+async function getUserToken(code){
+    const response = await fetch(`/token?code=${code}`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    });
+    const res = await response.json();
+    sessionStorage.setItem('user_token', res.token);
+    sessionStorage.setItem('token_expires', res.expires);
+}
+
+function getUserProfile(){
+    const token = sessionStorage.getItem('user_token');
+    fetch('https://www.strava.com/api/v3/athlete', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET'
+    }).then(response => {
+            response.json().then(res => {
+                localStorage.setItem('user', JSON.stringify(res));
+            });
+        }
+    )
+}
+
+function getUserActivities(page=1){
+    const token = sessionStorage.getItem('user_token');
+    const endDate = Date.now();
+    const startDate = Date.parse("2022-01-01T00:00:00.000"); // 1 Jan 00:00 no time zone specified => using locale
+    fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${page}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET'
+    }).then(response => {
+            response.json().then(res => {
+                let prevRes = JSON.parse(localStorage.getItem('activities'));
+                for(const activity of res){
+                    if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
+                        prevRes.push(activity);
+                    }
+                }
+                localStorage.setItem('activities', JSON.stringify(prevRes));
+                if(res.length === 30){
+                    getUserActivities(++page); // Default per page results is 30 => run for next page
+                }
+            });
+        }
+    )
+}
+
+function getAthleteStats(){
+    const token = sessionStorage.getItem('user_token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    fetch(`https://www.strava.com/api/v3/athletes/${user.id}/stats`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET'
+    }).then(response => {
+            response.json().then(res => {
+                localStorage.setItem('athlete', JSON.stringify(res));
+            });
+        }
+    )
+}
+
+main().then(() => {
+    getUserProfile();
+    localStorage.setItem('activities', JSON.stringify([]));
+    getUserActivities();
+    getAthleteStats();
+});
