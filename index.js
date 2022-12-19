@@ -13,6 +13,13 @@ router.use(express.static(path.join(__dirname, 'public')));
 
 const usersCredentials = {};
 
+router.get('/appid', (req, res) => {
+    if(process.env.ID){
+        res.status(200).json(process.env.ID);
+    }
+    res.status(500).end();
+})
+
 router.get('/token', (req, res) => {
     if(!('code' in req.query)){
         res.status(400).end;
