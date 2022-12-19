@@ -1,80 +1,44 @@
-function getFastestRide(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
-    return activities.reduce((fastest, current) => {
-        if(fastest === null || fastest.type !== "Ride"){
-            if(current.type === "Ride"){
+function getBest(storedAs, sportType, comparedData){
+    const activities = JSON.parse(localStorage.getItem(storedAs));
+    return activities.reduce((best, current) => {
+        if(best === null || best.type !== sportType){
+            if(current.type === sportType){
                 return current;
             }
             return null;
         }
-        if(current.type !== "Ride"){
-            return fastest;
+        if(current.type !== sportType){
+            return best;
         }
-        if(current.average_speed > fastest.average_speed){
+        if(current[comparedData] > best[comparedData]){
             return current;
         }
-        return fastest;
+        return best;
     });
 }
 
-function getFastestRun(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
-    return activities.reduce((fastest, current) => {
-        if(fastest === null || fastest.type !== "Run"){
-            if(current.type === "Run"){
-                return current;
-            }
-            return null;
-        }
-        if(current.type !== "Run"){
-            return fastest;
-        }
-        if(current.average_speed > fastest.average_speed){
-            return current;
-        }
-        return fastest;
-    });
+function getFastestRide(storedAs = 'activities'){
+    return getBest(storedAs, 'Ride', 'average_speed');
 }
 
-function getBiggestClimbRide(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
-    return activities.reduce((longuest, current) => {
-        if(longuest === null || longuest.type !== "Ride"){
-            if(current.type === "Ride"){
-                return current;
-            }
-            return null;
-        }
-        if(current.type !== "Ride"){
-            return longuest;
-        }
-        if(current.distance > longuest.distance){
-            return current;
-        }
-        return longuest;
-    });
+function getFastestRun(storedAs = 'activities'){
+    return getBest(storedAs, 'Run', 'average_speed');
 }
 
-function getBiggestClimbRun(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
-    return activities.reduce((longuest, current) => {
-        if(longuest === null || longuest.type !== "Run"){
-            if(current.type === "Run"){
-                return current;
-            }
-            return null;
-        }
-        if(current.type !== "Run"){
-            return longuest;
-        }
-        if(current.distance > longuest.distance){
-            return current;
-        }
-        return longuest;
-    });
+function getLonguestRide(storedAs = 'activities'){
+    return getBest(storedAs, 'Ride', 'distance');
+}
+
+function getLonguestRun(storedAs = 'activities'){
+    return getBest(storedAs, 'Run', 'distance');
 }
 
 console.log(getFastestRide());
 console.log(getFastestRun());
-console.log(getBiggestClimbRide());
-console.log(getBiggestClimbRun());
+console.log(getLonguestRide());
+console.log(getLonguestRun());
+console.log('2021 values : ');
+console.log(getFastestRide('2021-activities'));
+console.log(getFastestRun('2021-activities'));
+console.log(getLonguestRide('2021-activities'));
+console.log(getLonguestRun('2021-activities'));

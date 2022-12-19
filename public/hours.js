@@ -8,4 +8,15 @@ function getHoursByMonth(){
     return timeByMonth;
 }
 
+function getHours(storedAs = 'activities'){
+    const activities = JSON.parse(localStorage.getItem(storedAs));
+    let hours = 0;
+    for(const activity of activities){
+        hours += activity.moving_time/60/60
+    }
+    return hours;    
+}
+
 console.log(getHoursByMonth());
+console.log(getHours());
+console.log(getHours('2021-activities'));

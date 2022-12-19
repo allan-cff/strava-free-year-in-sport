@@ -1,4 +1,4 @@
-function getTotals(){
+function getTotals(storedAs = 'activities'){
     const totals = {
         ytd_total_climb : 0,
         ytd_total_distance : 0,
@@ -8,7 +8,7 @@ function getTotals(){
         ytd_ride_distance : 0,
         ytd_swim_distance : 0
     };
-    const activities = JSON.parse(localStorage.getItem('activities'));
+    const activities = JSON.parse(localStorage.getItem(storedAs));
     for(const activity of activities){
         totals.ytd_total_climb = totals.ytd_total_climb + activity.total_elevation_gain;
         totals.ytd_total_distance = totals.ytd_total_distance + activity.distance;
@@ -29,8 +29,8 @@ function getTotals(){
     return totals;
 }
 
-function getClimbByMonth(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
+function getClimbByMonth(storedAs = 'activities'){
+    const activities = JSON.parse(localStorage.getItem(storedAs));
     const climbByMonth = {};
     for(let i = 1; i < 13; i++){
         climbByMonth[i] = 0;
@@ -42,9 +42,9 @@ function getClimbByMonth(){
     return climbByMonth;
 }
 
-function getDistanceByMonth(){
+function getDistanceByMonth(storedAs = 'activities'){
     const distanceByMonth = {};
-    const activities = JSON.parse(localStorage.getItem('activities'));
+    const activities = JSON.parse(localStorage.getItem(storedAs));
     for(let i = 1; i < 13; i++){
         distanceByMonth[i] = 0;
     }
@@ -58,3 +58,7 @@ function getDistanceByMonth(){
 console.log(getTotals());
 console.log(getClimbByMonth());
 console.log(getDistanceByMonth());
+console.log('2021 Values : ');
+console.log(getTotals('2021-activities'));
+console.log(getClimbByMonth('2021-activities'));
+console.log(getDistanceByMonth('2021-activities'));

@@ -57,26 +57,27 @@ function getUserProfile(){
     )
 }
 
-function getUserActivities(page=1){
+function getUserActivities(startDate, endDate, options={storeAs : 'activities', page : 1}){
+    options.storeAs = options.storeAs || 'activities';
+    options.page = options.page || 1;
     const token = sessionStorage.getItem('user_token');
-    const endDate = Date.now();
-    const startDate = Date.parse("2022-01-01T00:00:00.000"); // 1 Jan 00:00 no time zone specified => using locale
-    fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${page}`, {
+    fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${options.page}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
         method: 'GET'
     }).then(response => {
             response.json().then(res => {
-                let prevRes = JSON.parse(localStorage.getItem('activities'));
+                let prevRes = JSON.parse(localStorage.getItem(options.storeAs));
                 for(const activity of res){
                     if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
                         prevRes.push(activity);
                     }
                 }
-                localStorage.setItem('activities', JSON.stringify(prevRes));
+                localStorage.setItem(options.storeAs, JSON.stringify(prevRes));
                 if(res.length === 30){
-                    getUserActivities(++page); // Default per page results is 30 => run for next page
+                    options.page = options.page + 1;
+                    getUserActivities(startDate, endDate, options); // Default per page results is 30 => run for next page
                 }
             });
         }
@@ -102,6 +103,7 @@ function getAthleteStats(){
 main().then(() => {
     getUserProfile();
     localStorage.setItem('activities', JSON.stringify([]));
-    getUserActivities();
-    getAthleteStats();
+    getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now());
+    localStorage.setItem('2021-activities', JSON.stringify([]));
+    getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'});
 });
