@@ -116,6 +116,73 @@ function sortByKudos(storedAs='activities'){
     return activities;
 }
 
+function getTotals(storedAs = 'activities', storeAs = 'totals'){
+    const totals = {
+        total : {
+            climb : 0,
+            distance : 0,
+            hours : 0,
+            count : 0
+        },
+        ride : {
+            climb : 0,
+            distance : 0,
+            hours : 0,
+            count : 0
+        },
+        run : {
+            climb : 0,
+            distance : 0,
+            hours : 0,
+            count : 0
+        },
+        hike : {
+            climb : 0,
+            distance : 0,
+            hours : 0,
+            count : 0
+        },
+        swim : {
+            distance : 0,
+            hours : 0,
+            count : 0
+        },
+    };
+    const activities = JSON.parse(localStorage.getItem(storedAs));
+    for(const activity of activities){
+        totals.total.climb += activity.total_elevation_gain;
+        totals.total.distance += activity.distance;
+        totals.total.hours += activity.moving_time/60/60;
+        totals.total.count += 1;
+        switch(activity.type){
+            case 'Ride' :
+                totals.ride.climb += activity.total_elevation_gain;
+                totals.ride.distance += activity.distance;
+                totals.ride.hours += activity.moving_time/60/60;
+                totals.ride.count += 1;
+                break;
+            case 'Run' :
+                totals.run.climb += activity.total_elevation_gain;
+                totals.run.distance += activity.distance;
+                totals.run.hours += activity.moving_time/60/60;
+                totals.run.count += 1;
+                break;
+            case 'Swim' :
+                totals.swim.distance += activity.distance;
+                totals.swim.hours += activity.moving_time/60/60;
+                totals.swim.count += 1;
+                break;
+            case 'Hike' :
+                totals.hike.climb += activity.total_elevation_gain;
+                totals.hike.distance += activity.distance;
+                totals.hike.hours += activity.moving_time/60/60;
+                totals.hike.count += 1;
+                break;          
+        }
+    }
+    localStorage.setItem(storeAs, JSON.stringify(totals))
+}
+
 function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, pictureByActivity=1){
     const activities = sortByKudos(storedAs);
     let counter = 0;
@@ -157,4 +224,6 @@ main().then(async () => {
     for(const id of bestPicturesActivitiesId){
         getDetailledActivity(id);
     }
+
+    getTotals();
 });

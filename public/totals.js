@@ -1,32 +1,5 @@
-function getTotals(storedAs = 'activities'){
-    const totals = {
-        ytd_total_climb : 0,
-        ytd_total_distance : 0,
-        ytd_ride_climb : 0,
-        ytd_ride_distance : 0,
-        ytd_run_distance : 0,
-        ytd_ride_distance : 0,
-        ytd_swim_distance : 0
-    };
-    const activities = JSON.parse(localStorage.getItem(storedAs));
-    for(const activity of activities){
-        totals.ytd_total_climb = totals.ytd_total_climb + activity.total_elevation_gain;
-        totals.ytd_total_distance = totals.ytd_total_distance + activity.distance;
-        if(activity.type === "Ride"){
-            totals.ytd_ride_climb = totals.ytd_ride_climb + activity.total_elevation_gain;
-            totals.ytd_ride_distance = totals.ytd_ride_distance + activity.distance;
-        } else {
-            if(activity.type === "Run"){
-                totals.ytd_run_distance = totals.ytd_run_distance + activity.total_elevation_gain;
-                totals.ytd_run_distance = totals.ytd_run_distance + activity.distance;
-            } else {
-                if(activity.type === "Swim"){
-                    totals.ytd_swim_distance = totals.ytd_swim_distance + activity.distance;
-                }
-            }
-        }
-    }
-    return totals;
+function getTotals(){
+    return JSON.parse(localStorage.getItem('totals'));
 }
 
 function getClimbByMonth(storedAs = 'activities'){
