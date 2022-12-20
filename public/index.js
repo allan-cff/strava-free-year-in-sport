@@ -1,9 +1,9 @@
-async function main() {
+async function checkCredentials() {
     if(sessionStorage.getItem('user_token') !== null){ // If we have a token, user already accepted oauth
         const token = sessionStorage.getItem('user_token');
-        const expires = sessionStorage.getItem('token_expires')
-        if(Date.now() - 30*60*1000 < expires){ // If token expired, refreshes it
-            await refreshToken(token);
+        const expires = sessionStorage.getItem('token_expires');
+        if(Date.now() > expires - 60*60*1000){ // If token expired, refreshes it
+            await refreshToken();
         }
     } else {
         const url = new URL(window.location.href); // If there is code in the url, the user just authorized from oauth page
@@ -16,7 +16,9 @@ async function main() {
     }
 }
 
-async function refreshToken(token){
+async function refreshToken(){
+    const user = localStorage.getItem('user');
+    const userId = user.id;
     const response = await fetch(`/refresh?userId=${userId}`, {
         headers: {
             'Accept': 'application/json',
@@ -26,7 +28,7 @@ async function refreshToken(token){
     });
     const res = await response.json();
     sessionStorage.setItem('user_token', res.token);
-    sessionStorage.setItem('token_expires', res.expires);
+    sessionStorage.setItem('token_expires', res.expires*1000);
 }
 
 async function getUserToken(code){
@@ -39,7 +41,7 @@ async function getUserToken(code){
     });
     const res = await response.json();
     sessionStorage.setItem('user_token', res.token);
-    sessionStorage.setItem('token_expires', res.expires);
+    sessionStorage.setItem('token_expires', res.expires*1000);
 }
 
 async function getUserProfile(){
@@ -50,11 +52,16 @@ async function getUserProfile(){
         },
         method: 'GET'
     }).then(response => {
+        if(response.status === 401){
+            console.log(response);
+            checkCredentials();
+        }
+        if(response.status === 200){
             response.json().then(res => {
                 localStorage.setItem('user', JSON.stringify(res));
             });
         }
-    )
+    });
 }
 
 async function getUserActivities(startDate, endDate, options={storeAs : 'activities', page : 1}){
@@ -67,6 +74,11 @@ async function getUserActivities(startDate, endDate, options={storeAs : 'activit
         },
         method: 'GET'
     }).then(response => {
+        if(response.status === 401){
+            console.log(response);
+            checkCredentials();
+        }
+        if(response.status === 200){
             response.json().then(res => {
                 let prevRes = JSON.parse(localStorage.getItem(options.storeAs));
                 alreadyCached = false;
@@ -83,8 +95,8 @@ async function getUserActivities(startDate, endDate, options={storeAs : 'activit
                     getUserActivities(startDate, endDate, options); // Default per page results is 30 => run for next page
                 }
             });
-        }
-    )
+        }    
+    });
 }
 
 function getDetailledActivity(id){
@@ -98,11 +110,16 @@ function getDetailledActivity(id){
         },
         method: 'GET'
     }).then(response => {
+        if(response.status === 401){
+            console.log(response);
+            checkCredentials();
+        }
+        if(response.status === 200){
             response.json().then(res => {
                 localStorage.setItem(id.toString(10), JSON.stringify(res));
             });
-        }
-    )
+        }    
+    });
 }
 
 function sortByKudos(storedAs='activities'){
@@ -122,29 +139,39 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
             climb : 0,
             distance : 0,
             hours : 0,
+            pr: 0,
+            kudos : 0,
             count : 0
         },
         ride : {
             climb : 0,
             distance : 0,
             hours : 0,
+            pr: 0,
+            kudos : 0,
             count : 0
         },
         run : {
             climb : 0,
             distance : 0,
             hours : 0,
+            pr: 0,
+            kudos : 0,
             count : 0
         },
         hike : {
             climb : 0,
             distance : 0,
             hours : 0,
+            pr: 0,
+            kudos : 0,
             count : 0
         },
         swim : {
             distance : 0,
             hours : 0,
+            pr: 0,
+            kudos : 0,
             count : 0
         },
     };
@@ -153,29 +180,39 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
         totals.total.climb += activity.total_elevation_gain;
         totals.total.distance += activity.distance;
         totals.total.hours += activity.moving_time/60/60;
+        totals.total.pr += activity.pr_count;
+        totals.total.kudos += activity.kudos_count;
         totals.total.count += 1;
         switch(activity.type){
             case 'Ride' :
                 totals.ride.climb += activity.total_elevation_gain;
                 totals.ride.distance += activity.distance;
                 totals.ride.hours += activity.moving_time/60/60;
+                totals.ride.pr += activity.pr_count;
+                totals.ride.kudos += activity.kudos_count;
                 totals.ride.count += 1;
                 break;
             case 'Run' :
                 totals.run.climb += activity.total_elevation_gain;
                 totals.run.distance += activity.distance;
                 totals.run.hours += activity.moving_time/60/60;
+                totals.run.pr += activity.pr_count;
+                totals.run.kudos += activity.kudos_count;
                 totals.run.count += 1;
                 break;
             case 'Swim' :
                 totals.swim.distance += activity.distance;
                 totals.swim.hours += activity.moving_time/60/60;
+                totals.swim.pr += activity.pr_count;
+                totals.swim.kudos += activity.kudos_count;
                 totals.swim.count += 1;
                 break;
             case 'Hike' :
                 totals.hike.climb += activity.total_elevation_gain;
                 totals.hike.distance += activity.distance;
                 totals.hike.hours += activity.moving_time/60/60;
+                totals.hike.pr += activity.pr_count;
+                totals.hike.kudos += activity.kudos_count;
                 totals.hike.count += 1;
                 break;          
         }
@@ -200,7 +237,7 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
     return result;
 }
 
-main().then(async () => {
+checkCredentials().then(async () => {
     if(localStorage.getItem('activities') === null){
         localStorage.setItem('activities', JSON.stringify([]));
     }
