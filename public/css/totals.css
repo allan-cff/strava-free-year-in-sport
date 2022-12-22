@@ -1,0 +1,56 @@
+.denivele {
+    height : 20vh;
+    background-color: #FC5200;
+    color :white;
+    position:relative;
+    padding-top : 2vh;
+}
+
+h2{
+    margin-top :0;
+}
+
+.record {
+    font-size:32px;
+    position :absolute;
+    top : 7vh;
+    left: 59vw;
+    width:33vw;
+    color:white;
+}
+
+.record-denivele {
+    top:3vh;
+}
+
+.montagne{
+    position:absolute;
+    width:60vw;
+    bottom:0;
+    margin-left:20vw;
+}
+
+.triangle{
+    position:absolute;
+    top:0;
+    width:10vw;
+}
+
+.triangle-gauche {
+    left:0;
+}
+
+.triangle-droit {
+    right:0;
+}
+
+.distance {
+    background-color: #495227;
+    height : 15vh;
+    padding-top : 7vh;
+    position: relative;
+}
+
+.nombre-distance{
+    color : #C0CA53;
+}

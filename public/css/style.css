@@ -84,6 +84,8 @@ footer {
     border-bottom : 3px solid black;
     border-top : 3px solid black;
     padding: 1vh 0 1vh 5vw;
+    position:relative;
+    z-index:100;
 }
 
 h2 {
