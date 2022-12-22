@@ -8,16 +8,16 @@
     display:flex;
 }
 
-.meilleures-photos .premier{
+.meilleures-photos #premier{
     background-color: #DEAA47;
 }
 
-.meilleures-photos .deuxieme {
+.meilleures-photos #deuxieme {
     border-bottom : 3px solid black;
     border-top : 3px solid black;
 }
 
-.meilleures-photos .troisieme{
+.meilleures-photos #troisieme{
     background-color: #FC5200;
     border-bottom : 3px solid black;
 }
