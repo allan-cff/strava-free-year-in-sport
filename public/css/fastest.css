@@ -1,0 +1,58 @@
+.fastest-sports {
+    height:30vh;
+}
+
+.longest-sport {
+    height : 15vh;
+}
+
+.sport-1 {
+    background-color: #FC5200;
+    border-bottom: solid 3px black;
+    height:50%;
+}
+
+.sport-2 {
+    background-color : #002E51;
+    height:50%;
+    color :white;
+}
+
+.sport-3 {
+    background-color: #C0CA53;
+    height:100%;
+}
+
+.sport {
+    display:flex;
+    justify-content: space-between;
+    padding : 0 5vw 0 5vw;
+    font-size : 30px;
+}
+
+.sport p {
+    margin : 0;
+}
+
+.description-activite {
+    padding-top : 2vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom:3vh;
+}
+
+.description-activite img {
+    width: 10vw;
+}
+
+.vitesse {
+    text-align: right;
+    padding-top : 2vh;
+}
+
+
+
+.sport-1 img {
+    stroke:black;
+}

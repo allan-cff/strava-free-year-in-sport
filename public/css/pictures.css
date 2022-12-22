@@ -1,0 +1,48 @@
+.meilleures-photos{
+    height:69vh;
+    background-color: #F4F3EB
+}
+
+.meilleures-photos div {
+    height : 25%;
+    display:flex;
+}
+
+.meilleures-photos .premier{
+    background-color: #DEAA47;
+}
+
+.meilleures-photos .deuxieme {
+    border-bottom : 3px solid black;
+    border-top : 3px solid black;
+}
+
+.meilleures-photos .troisieme{
+    background-color: #FC5200;
+    border-bottom : 3px solid black;
+}
+
+.pictures-photo {
+    border-right:3px black solid;
+}
+
+.pictures-info{
+    flex-direction: column;
+    height:100%;
+    padding : 1vh 10vw 1vh 5vw;
+    justify-content: space-between;
+    font-size:32px;
+}
+
+.pictures-horaires {
+    flex-direction : column;
+}
+
+.pictures-horaires p {
+    margin:0;
+}
+
+.pictures-nom{
+    position:relative;
+    bottom:0;
+}

@@ -1,0 +1,103 @@
+@font-face {
+    font-family: Karla;
+
+    src: url("/public/Karla/Karla-VariableFont_wght.ttf");
+
+}
+
+body {
+    margin:0;
+    font-family: Karla;
+    max-height:100vh;
+    height:100vh;
+    background-color: rgb(0, 0, 0);
+}
+
+main {
+    background-color:#F4F3EB;
+}
+
+header {
+    background-color:black;
+    height:9vh;
+    display :flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color:white;
+    padding: 0 5vw 2vh 5vw;
+    
+}
+
+header img {
+    width:25%;
+}
+
+header p {
+    margin:0;
+    font-size:38px;
+}
+
+
+
+footer {
+    height:9vh;
+    position:fixed;
+    bottom:0;
+    display:flex;
+    justify-content:space-between;
+    background-color:black;
+    color:white;
+    width:100vw;
+    margin-bottom : 4.5vh;
+    
+    border-bottom : 3px solid white;
+}
+
+.fleche {
+    width:17%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fleche img {
+    height:4vh;
+}
+
+.fleche-gauche {
+    border-right:3px solid white;
+}
+
+.fleche-droite {
+    border-left:3px solid white;
+}
+
+.pagination {
+    align-self: center;
+    font-size:44px;
+}
+
+.titre{
+    height:4vh;
+    background-color:#F4F3EB;
+    margin:0;
+    border-bottom : 3px solid black;
+    border-top : 3px solid black;
+    padding: 1vh 0 1vh 5vw;
+}
+
+h2 {
+    padding-left:5vw;
+}
+
+.nombre-xl {
+    padding-left:5vw;
+    font-size : 160px;
+    margin:0;
+}
+
+.nombre-md {
+    padding-left:5vw;
+    font-size : 120px;
+    margin:0;
+}
