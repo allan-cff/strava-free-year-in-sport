@@ -26,11 +26,11 @@ document.querySelector('.distance .nombre-md').innerHTML = (totals.total.distanc
 
 
 if(totals.run.hours > totals.ride.hours && totals.run.hours > totals.swim.hours){
-    document.querySelector('.top-sport img').src = './images/cap.svg';
+    document.querySelector('.top-sport img').src = './images/run-white.svg';
     document.querySelector('.top-sport img').alt = 'Course à pieds';
 }
 
 if(totals.ride.hours > totals.run.hours && totals.ride.hours > totals.swim.hours){
-    document.querySelector('.top-sport img').src = './images/velo.svg';
+    document.querySelector('.top-sport img').src = './images/bike-white.svg';
     document.querySelector('.top-sport img').alt = 'Cyclisme';
 }

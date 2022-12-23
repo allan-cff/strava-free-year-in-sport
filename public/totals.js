@@ -1,5 +1,5 @@
-function getTotals(){
-    return JSON.parse(localStorage.getItem('totals'));
+function getTotals(storedAs = 'totals'){
+    return JSON.parse(localStorage.getItem(storedAs));
 }
 
 function getClimbByMonth(storedAs = 'activities'){
@@ -69,3 +69,5 @@ for(const [key, value] of Object.entries(distanceByMonth)){
 }
 console.log(bestMonthDistanceValue)
 document.querySelector('.distance .record-distance').innerHTML = `En ${months[bestMonthDistance]}, vous avez parcouru ${normalizeValue(bestMonthDistanceValue/1000)}km - votre plus gros mois !`;
+document.querySelector('.comp-2021 .nb-deni-2021').innerHTML = normalizeValue(getTotals('2021-totals').total.climb);
+document.querySelector('.comp-2021 .nb-dis-2021').innerHTML = normalizeValue(getTotals('2021-totals').total.distance/1000);
