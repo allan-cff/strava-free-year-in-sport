@@ -78,29 +78,29 @@ const sport2Elem = document.querySelector('.fastest-sports .sport-2');
 const sport3Elem = document.querySelector('.longest-sport .sport-3');
 
 if(sport1 === 'Run'){
-    sport1Elem.querySelector('img').src = './images/cap.svg';
+    sport1Elem.querySelector('img').src = './images/run-black.svg';
     sport1Elem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport1 === 'Ride'){
-    sport1Elem.querySelector('img').src = './images/velo.svg';
+    sport1Elem.querySelector('img').src = './images/bike-black.svg';
     sport1Elem.querySelector('img').alt = 'Cyclisme';
 }
 
 if(sport2 === 'Run'){
-    sport2Elem.querySelector('img').src = './images/cap.svg';
+    sport2Elem.querySelector('img').src = './images/run-white.svg';
     sport2Elem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport2 === 'Ride'){
-    sport2Elem.querySelector('img').src = './images/velo.svg';
+    sport2Elem.querySelector('img').src = './images/bike-white.svg';
     sport2Elem.querySelector('img').alt = 'Cyclisme';
 }
 
 if(sport3 === 'Run'){
-    sport3Elem.querySelector('img').src = './images/cap.svg';
+    sport3Elem.querySelector('img').src = './images/run-black.svg';
     sport3Elem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport3 === 'Ride'){
-    sport3Elem.querySelector('img').src = './images/velo.svg';
+    sport3Elem.querySelector('img').src = './images/bike-black.svg';
     sport3Elem.querySelector('img').alt = 'Cyclisme';
 }
 
