@@ -49,8 +49,39 @@ h2{
     height : 15vh;
     padding-top : 7vh;
     position: relative;
+    border-bottom:solid 3px black;
 }
 
 .nombre-distance{
     color : #C0CA53;
+}
+
+.comp-2021{
+    height:20vh;
+    background-color: #C0CA53;
+    display : flex;
+    align-items: center;
+}
+
+.comp-2021>div {
+    width:50vw;
+}
+
+.h2-2021{
+    font-size:30px;
+}
+
+.nb-deni-2021 {
+    color:#002E51;
+    
+}
+
+.nb-dis-2021 {
+    color:#495227;
+}
+
+.nb-2021 {
+    font-size : 100px;
+    margin:0;
+    padding-left:5vw;
 }

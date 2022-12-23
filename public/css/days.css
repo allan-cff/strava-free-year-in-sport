@@ -1,7 +1,7 @@
 .calendrier {
     background-color: #002E51;
     color:white;
-    height:40vh;
+    height:36vh;
     border-bottom:solid 3px black;
     position : relative;
 }
@@ -9,8 +9,8 @@
 .annee {
     transform: rotateZ(-90deg);
     position : absolute;
-    bottom : 0vh;
-    left : 5vw;
+    bottom : 3vh;
+    left : 0vw;
 }
 
 .mois {
@@ -55,8 +55,32 @@
     padding-left:2vh;
 }
 
+.streak{
+    height : 7vh;
+    border-bottom: solid black 3px;
+    display:flex;
+    align-items: center;
+    background-color: #C0CA53;
+}
+
+.streak>p {
+    padding-left:10vw;
+    font-size:90px;
+    color:#002E51;
+}
+
+.serie-phrase {
+    flex-direction: column;
+    font-size:25px;
+    padding-left:2vw;
+}
+
+.serie-phrase p {
+    margin:0;
+}
+
 .top-sport {
-    height:29vh;
+    height:26vh;
 }
 
 .top-sport h2{
@@ -114,8 +138,8 @@
 
 .sport-1 {
     background-color: #FC5200;
-    width: 16vw;
-    height:16vw;
+    width: 15vw;
+    height:15vw;
     border-radius : 16vw;
     justify-content: center;
     align-items: center;

@@ -88,8 +88,13 @@ footer {
     z-index:100;
 }
 
+h1 {
+    font-weight: 400;
+}
+
 h2 {
     padding-left:5vw;
+    font-weight:400;
 }
 
 .nombre-xl {
