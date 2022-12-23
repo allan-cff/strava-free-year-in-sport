@@ -263,4 +263,5 @@ checkCredentials().then(async () => {
     }
 
     getTotals();
+    getTotals('2021-activities', '2021-totals')
 });
