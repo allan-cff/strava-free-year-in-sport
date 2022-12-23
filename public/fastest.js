@@ -17,6 +17,10 @@ function getBest(storedAs, sportType, comparedData){
     });
 }
 
+function getTotals(storedAs = 'totals'){
+    return JSON.parse(localStorage.getItem(storedAs));
+}
+
 function getFastestRide(storedAs = 'activities'){
     return getBest(storedAs, 'Ride', 'average_speed');
 }
@@ -123,3 +127,5 @@ sport2Elem.querySelector('.heure').innerHTML = new Date(bestSport2.start_date_lo
 
 sport3Elem.querySelector('.date').innerHTML = new Date(bestSport3.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
 sport3Elem.querySelector('.heure').innerHTML = new Date(bestSport3.start_date_local).toLocaleTimeString();
+
+document.querySelector('.moyenne .nombre-moyenne').innerHTML = (getTotals().ride.distance/1000/getTotals().ride.count).toFixed(2);
