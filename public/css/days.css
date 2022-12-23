@@ -9,8 +9,8 @@
 .annee {
     transform: rotateZ(-90deg);
     position : absolute;
-    bottom : -5vh;
-    left : 20vw;
+    bottom : 0vh;
+    left : 5vw;
 }
 
 .mois {

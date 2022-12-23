@@ -1,0 +1,17 @@
+.record {
+    background-color: #78DAE5;
+    height:25vh;
+}
+
+.medaille {
+    height:30vw;
+    width:30vw;
+    text-align: center;
+    background-color: #C0CA53;
+    margin : 4vh 35vw 4vh 35vw;
+    border-radius:15vw;
+    display : flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
