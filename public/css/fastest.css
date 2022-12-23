@@ -56,3 +56,16 @@
 .sport-1 img {
     stroke:black;
 }
+
+.moyenne {
+    height:12vh;
+    background-color: #495227;
+    display:flex;
+    justify-content: end;
+    align-items: center;
+    color:white;
+}
+
+.nombre-moyenne {
+    text-align: end;
+}
