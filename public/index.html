@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Votre Année Sportive Strava Free</title>
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
     <script src="index.js" defer></script>
 </head>
 <body>
-
+    <main>
+        <label for="loadingState">Preparing your 2022 recap :</label>
+        <progress id="loadingState" max="100" value="0"> 0% </progress>
+    </main>
+    <footer>
+        <div class="fleche fleche-gauche">
+            <a href="recap.html">
+                <img src="./images/fleche-gauche.svg" alt="Flèche vers la gauche">
+            </a>    
+        </div>
+        <div class="pagination">
+            <p>1/8</p>
+        </div>
+        <div class="fleche fleche-droite">
+            <a href="days.html">
+                <img src="./images/fleche-droite.svg" alt="Flèche vers la droite">
+            </a>    
+        </div>
+    </footer>
 </body>
 </html>

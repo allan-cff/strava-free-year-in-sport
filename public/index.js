@@ -45,6 +45,7 @@ async function getUserToken(code){
 }
 
 async function getUserProfile(){
+    console.log('Getting user profile');
     const token = sessionStorage.getItem('user_token');
     fetch('https://www.strava.com/api/v3/athlete', {
         headers: {
@@ -59,6 +60,7 @@ async function getUserProfile(){
         if(response.status === 200){
             response.json().then(res => {
                 localStorage.setItem('user', JSON.stringify(res));
+                console.log('Successfully got user profile');
             });
         }
     });
@@ -67,39 +69,40 @@ async function getUserProfile(){
 async function getUserActivities(startDate, endDate, options={storeAs : 'activities', page : 1}){
     options.storeAs = options.storeAs || 'activities';
     options.page = options.page || 1;
+    console.log('Getting user activities stocked as ', options.storeAs);
     const token = sessionStorage.getItem('user_token');
-    fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${options.page}`, {
+    const response = await fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${options.page}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
         method: 'GET'
-    }).then(response => {
-        if(response.status === 401){
-            console.log(response);
-            checkCredentials();
-        }
-        if(response.status === 200){
-            response.json().then(res => {
-                let prevRes = JSON.parse(localStorage.getItem(options.storeAs));
-                alreadyCached = false;
-                for(const activity of res){
-                    if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
-                        prevRes.push(activity);
-                    } else {
-                        alreadyCached = true;
-                    }
-                }
-                localStorage.setItem(options.storeAs, JSON.stringify(prevRes));
-                if(res.length === 30 && !alreadyCached){
-                    options.page = options.page + 1;
-                    getUserActivities(startDate, endDate, options); // Default per page results is 30 => run for next page
-                }
-            });
-        }    
     });
+    if(response.status === 401){
+        console.log(response);
+        checkCredentials();
+    }
+    if(response.status === 200){
+        const res = await response.json();
+        let prevRes = JSON.parse(localStorage.getItem(options.storeAs));
+        alreadyCached = false;
+        for(const activity of res){
+            if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
+                prevRes.push(activity);
+            } else {
+                alreadyCached = true;
+            }
+        }
+        localStorage.setItem(options.storeAs, JSON.stringify(prevRes));
+        if(res.length === 30 && !alreadyCached){
+            options.page = options.page + 1;
+            await getUserActivities(startDate, endDate, options); // Default per page results is 30 => run for next page
+        }
+        console.log('Successfully got user activities stocked as ', options.storeAs);
+    }    
 }
 
-function getDetailledActivity(id){
+async function getDetailledActivity(id){
+    console.log('Getting detailled activity ', id);
     if(localStorage.getItem(id)){
         return JSON.parse(localStorage.getItem(id));
     }
@@ -117,12 +120,14 @@ function getDetailledActivity(id){
         if(response.status === 200){
             response.json().then(res => {
                 localStorage.setItem(id.toString(10), JSON.stringify(res));
+                console.log('Successfully got detailled activity ', id);
             });
         }    
     });
 }
 
 function sortByKudos(storedAs='activities'){
+    console.log('Sorting by kudo');
     const activities = JSON.parse(localStorage.getItem(storedAs));
     activities.sort((a, b) => {
         if(b.kudos_count === a.kudos_count){
@@ -134,6 +139,7 @@ function sortByKudos(storedAs='activities'){
 }
 
 function getTotals(storedAs = 'activities', storeAs = 'totals'){
+    console.log('Counting Totals');
     const totals = {
         total : {
             climb : 0,
@@ -228,7 +234,6 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
         if(activity.total_photo_count > 0 && counter < limit){
             counter += Math.min(activity.total_photo_count, pictureByActivity);
             result.push(activity.id);
-            console.log('id ', activity.id, 'pictures : ', activity.total_photo_count, 'counter : ', counter);
         }
         if(counter >= limit){
             break;
@@ -238,6 +243,7 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
 }
 
 checkCredentials().then(async () => {
+    const progress = document.querySelector('progress');
     if(localStorage.getItem('activities') === null){
         localStorage.setItem('activities', JSON.stringify([]));
     }
@@ -245,23 +251,34 @@ checkCredentials().then(async () => {
         localStorage.setItem('2021-activities', JSON.stringify([]));
     }
 
-    console.log('Getting user profile');
     await getUserProfile();
+    progress.value = parseInt(progress.value, 10) + 10;
+    console.log(progress.value);
 
-    console.log('Getting user 2022 activities');
-    await getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now());
+    getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now())
+        .then(() => {
+            progress.value = parseInt(progress.value, 10) + 35;
+            console.log(progress.value);
+            const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
+            localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
+            
+            for(const id of bestPicturesActivitiesId){
+                getDetailledActivity(id);
+            }
+            progress.value = parseInt(progress.value, 10) + 10;
+            console.log(progress.value);
+        
+            getTotals();
+            progress.value = parseInt(progress.value, 10) + 5;
+            console.log(progress.value);
+        })
 
-    console.log('Getting user 2021 activities');
-    getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'});
-    
-    const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
-    localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
-    
-    console.log('Getting user detailled activities');
-    for(const id of bestPicturesActivitiesId){
-        getDetailledActivity(id);
-    }
-
-    getTotals();
-    getTotals('2021-activities', '2021-totals')
-});
+    getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'})
+        .then(() => {
+            progress.value = parseInt(progress.value, 10) + 35;
+            console.log(progress.value);
+            getTotals('2021-activities', '2021-totals');
+            progress.value = parseInt(progress.value, 10) + 5;
+            console.log(progress.value);
+        })
+    });
