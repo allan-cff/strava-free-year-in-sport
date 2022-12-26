@@ -1,0 +1,45 @@
+.presentation {
+    height: 82vh;
+    background-color: #ffff;
+}
+
+.milieu {
+    height:120vw;
+    width:100vw;
+    text-align: center;
+    background-color: #FC5200;
+    padding : 0;
+    margin : 10vh 0;
+    position: absolute;
+    border-radius:60vw/40vw;
+    display : flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
+
+progress {
+    background-color: #c14000;
+    color: #ffff;
+    border: 0;
+    height: 4px;
+    width: 40vw;
+    transition : width 1s ease;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #c14000;
+    border: 0;
+    height: 4px;
+    width: 40vw;
+}
+
+progress::-webkit-progress-value {
+    background-color: #ffff !important;
+    transition : width 1s ease;
+}
+
+progress::-moz-progress-bar {
+    background-color: #ffff !important;
+    transition : width 1s ease;
+}
