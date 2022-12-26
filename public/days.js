@@ -48,6 +48,16 @@ document.querySelector(`.nombre-xl`).innerHTML = daysActive.reduce((sum, current
 
 const months = ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'];
 const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const languages = {
+    "fr": {
+        "Ride" : "Cyclisme",
+        "MountainBikeRide" : "VTT",
+        "Run" : "Course",
+        "Hike" : "Randonnée",
+        "Swim" : "Natation"
+    }
+}
+
 let streak = 0;
 let maxStreak = 0;
 for(let i = 0; i < 12; i++){
@@ -77,8 +87,8 @@ for(let i = 1; i < 5; i++){
             maxPercentageSport = key;
         }
     }
-    document.querySelector(`body main .top-sport #top-${i} p`).innerHTML = `${(maxPercentage*100).toFixed(0)}%<br>${maxPercentageSport}`;
+    document.querySelector(`body main .top-sport #top-${i} p`).innerHTML = `${(maxPercentage*100).toFixed(0)}%<br>${languages.fr[maxPercentageSport] || maxPercentageSport}`;
     document.querySelector(`body main .top-sport #top-${i} img`).src = getSrc(maxPercentageSport);
-    document.querySelector(`body main .top-sport #top-${i} img`).alt = maxPercentageSport;
+    document.querySelector(`body main .top-sport #top-${i} img`).alt = languages.fr[maxPercentageSport] || maxPercentageSport;
     delete sportPercentage[maxPercentageSport];
 }
