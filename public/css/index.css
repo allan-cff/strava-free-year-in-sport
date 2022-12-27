@@ -1,6 +1,18 @@
+header {
+    visibility:hidden;
+}
+
+footer {
+    visibility:hidden;
+}
+
+body {
+    background-color: #F4F3EB;
+}
+
 .presentation {
     height: 82vh;
-    background-color: #ffff;
+    background-color: #F4F3EB;
     overflow:hidden;
     position:relative;
 }
