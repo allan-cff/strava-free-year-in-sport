@@ -242,43 +242,56 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
     return result;
 }
 
-checkCredentials().then(async () => {
-    const progress = document.querySelector('progress');
-    if(localStorage.getItem('activities') === null){
-        localStorage.setItem('activities', JSON.stringify([]));
-    }
-    if(localStorage.getItem('2021-activities') === null){
-        localStorage.setItem('2021-activities', JSON.stringify([]));
-    }
+function dataReady(){
+    document.querySelector('footer').style.visibility = "visible";
+    document.querySelector('body header').style.visibility = "visible";
+}
 
-    await getUserProfile();
-    progress.value = parseInt(progress.value, 10) + 10;
-    console.log(progress.value);
+checkCredentials()
+    .then(async () => {
+        const progress = document.querySelector('progress');
+        if(localStorage.getItem('activities') === null){
+            localStorage.setItem('activities', JSON.stringify([]));
+        }
+        if(localStorage.getItem('2021-activities') === null){
+            localStorage.setItem('2021-activities', JSON.stringify([]));
+        }
 
-    getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now())
-        .then(() => {
-            progress.value = parseInt(progress.value, 10) + 35;
-            console.log(progress.value);
-            const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
-            localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
+        await getUserProfile();
+        progress.value = parseInt(progress.value, 10) + 10;
+        console.log(progress.value);
+
+        getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now())
+            .then(() => {
+                progress.value = parseInt(progress.value, 10) + 35;
+                console.log(progress.value);
+                const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
+                localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
+                
+                for(const id of bestPicturesActivitiesId){
+                    getDetailledActivity(id);
+                }
+                progress.value = parseInt(progress.value, 10) + 10;
+                console.log(progress.value);
             
-            for(const id of bestPicturesActivitiesId){
-                getDetailledActivity(id);
-            }
-            progress.value = parseInt(progress.value, 10) + 10;
-            console.log(progress.value);
-        
-            getTotals();
-            progress.value = parseInt(progress.value, 10) + 5;
-            console.log(progress.value);
-        })
+                getTotals();
+                progress.value = parseInt(progress.value, 10) + 5;
+                console.log(progress.value);
+                if(progress.value === 100){
+                    dataReady();
+                }
+            });
 
-    getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'})
-        .then(() => {
-            progress.value = parseInt(progress.value, 10) + 35;
-            console.log(progress.value);
-            getTotals('2021-activities', '2021-totals');
-            progress.value = parseInt(progress.value, 10) + 5;
-            console.log(progress.value);
-        })
+        getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'})
+            .then(() => {
+                progress.value = parseInt(progress.value, 10) + 35;
+                console.log(progress.value);
+                getTotals('2021-activities', '2021-totals');
+                progress.value = parseInt(progress.value, 10) + 5;
+                console.log(progress.value);
+                if(progress.value === 100){
+                    dataReady();
+                }
+            });
+                
     });
