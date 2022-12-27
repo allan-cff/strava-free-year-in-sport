@@ -1,7 +1,3 @@
-#accountAuthButton img {
-    height:96px;
-}
-
 body {
     background-color: #F4F3EB;
     overflow:hidden;
@@ -12,22 +8,69 @@ body {
 
 main {
     overflow: hidden;
+    position: relative;
+}
+
+.bulle {
+
+}
+
+
+.bulle p {
+    margin:0;
+}
+
+.nb {
+    font-size : 250px;
+    margin:3vw;
+}
+
+#nb-20 {
+    width:60vw;
+    margin-top : 10vh;
+    padding-right:40vw;
+    text-align: end;
+}
+
+#nb-22 {
+    width:40vw;
+    text-align: start;
+    padding-left:5vw;
+}
+
+
+#bas {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    width:100vw;
+
+}
+
+#annee {
+    font-size : 100px;
+    color:white;
+    width:55vw;
+    text-align: end;
 }
 
 #bienvenue {
-    margin-top : 45vh;
+    margin-top : 40vh;
     padding:5vw;
     font-size:40px;
+    display: flex;
+    flex-direction: column;
 }
 
 #bienvenue>p {
     text-align: justify;
-    font-size: 50px;
+    font-size: 45px;
 }
 
 #voir-conditions {
     color:rgba(0, 0, 0, 0.479);
     text-decoration:underline;
+    text-align: left;
 }
 
 #bienvenue form {
@@ -48,3 +91,11 @@ main {
     accent-color : #FC5200;
 }
 
+#accountAuthButton img {
+    height:96px;
+}
+
+#accountAuthButton {
+    text-align: center;
+    margin-top : 3vh;
+}
