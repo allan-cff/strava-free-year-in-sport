@@ -81,20 +81,34 @@
     width:273px;
 }
 
-.stats .distance {
+.stats .distance-heures {
     height:430px;
+}
+
+.distance-heures {
+    display:flex;
+    flex-direction: row;
+    background-color: #C0CA53;
+    position:relative;
+    justify-content: space-between;
 }
 
 .distance {
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: #C0CA53;
-    position:relative;
+    padding-top : 3vh;
+}
+
+.heures {
+    z-index:10;
+    padding-top : 3vh;
+    margin-right: 5vh;
+    color:white;
 }
 
 .montagne-basse{
     position:absolute;
+    z-index:1;
     bottom:-2px;
     right:0;
     height:calc(100% + 2px);
