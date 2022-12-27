@@ -68,9 +68,6 @@ body {
     background-color: #FC5200;
     padding : 0;
     position: absolute;
-    top : 7vh;
-    left:-7vh;
-    right:-13vh;
     border-radius:40vh;
     display : flex;
     flex-direction:column;
@@ -78,6 +75,9 @@ body {
     justify-content: center;
     overflow:hidden;
     z-index:10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .milieu p {

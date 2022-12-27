@@ -8,7 +8,7 @@
 body {
     margin:0;
     font-family: Karla;
-    max-height:100vh;
+    max-height:100vw;
     height:100vh;
     background-color: rgb(0, 0, 0);
 }
@@ -112,4 +112,23 @@ h2 {
 .nombre-sm{
     font-size:60px;
     margin:0;
+}
+
+.bulle {
+    height:60vh;
+    width:60vh;
+    text-align: center;
+    background-color: #FC5200;
+    padding : 0;
+    position: absolute;
+    border-radius:40vh;
+    display : flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    overflow:hidden;
+    z-index:10;
+    top: 10vh;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

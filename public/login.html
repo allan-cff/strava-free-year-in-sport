@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <title>Connexion</title>
     <script src="login.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
+    <link rel="stylesheet" href="./css/login.css" type="text/css">
 </head>
 <body>
-  <a id="accountAuthButton" href="">Connexion</a>
+  <main>
+    <div class="bulle">
+      <p>20</p>
+      <p>L'ANNEE SPORTIVE</p>
+      <p>22</p>
+    </div>
+
+    <section id="bienvenue">
+      <p>
+        Bienvenue sur Strava Year in Sport Free ! 
+        Ce site n’est pas à vocation commerciale, il s’agit d’un projet étudiant qui n’a pas pour but de concurrencer Strava.
+        C’est pour quoi nous vous invitons à lire les conditions d’utilisation. Votre Strava Year in Sport ne pourra pas être créé sans votre accord.
+      </p>
+      <a id="voir-conditions" href="">Voir les conditions d'utilisations</a>
+      <form>
+        <input type="radio" id="conditions">
+        <label id="conditions">J'accepte les conditions d'utilisations</label>
+      </form>
+
+    </section>
+
+    <a id="accountAuthButton" href="">
+      <img src="./images/btn_strava_connectwith_orange.svg" alt="Bouton de connexion Strava">
+    </a>
+  </main>
 </body>
 </html>
