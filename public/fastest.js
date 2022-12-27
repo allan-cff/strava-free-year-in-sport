@@ -37,21 +37,10 @@ function getLonguestRun(storedAs = 'activities'){
     return getBest(storedAs, 'Run', 'distance');
 }
 
-function getAverageRideDistance(storedAs = 'activities'){
-    const totals = JSON.parse(localStorage.getItem('totals'));
-    return totals.ride.distance / totals.ride.count;
+function getAverageDistance(sport = "Ride", storedAs = 'totals'){
+    const totals = JSON.parse(localStorage.getItem(storedAs));
+    return totals[sport.toLowerCase()].distance / totals[sport.toLowerCase()].count;
 }
-
-console.log(getFastestRide());
-console.log(getFastestRun());
-console.log(getLonguestRide());
-console.log(getLonguestRun());
-console.log(getAverageRideDistance());
-console.log('2021 values : ');
-console.log(getFastestRide('2021-activities'));
-console.log(getFastestRun('2021-activities'));
-console.log(getLonguestRide('2021-activities'));
-console.log(getLonguestRun('2021-activities'));
 
 const totals = JSON.parse(localStorage.getItem('totals'));
 let sport1;
@@ -77,55 +66,66 @@ if(getLonguestRide().distance > getLonguestRun().distance){
     bestSport3 = getLonguestRun();
 }
 
-const sport1Elem = document.querySelector('.fastest-sports .sport-1');
-const sport2Elem = document.querySelector('.fastest-sports .sport-2');
-const sport3Elem = document.querySelector('.longest-sport .sport-3');
+const sport1FastestElem = document.querySelector('.fastest-sports .sport-1');
+const sport2FastestElem = document.querySelector('.fastest-sports .sport-2');
+const longuestElem = document.querySelector('.longest-sport .sport-3');
+const sport1AverageElem = document.querySelector('.moyenne .sport-1-moyenne');
+const sport2AverageElem = document.querySelector('.moyenne .sport-2-moyenne');
 
 if(sport1 === 'Run'){
-    sport1Elem.querySelector('img').src = './images/run-black.svg';
-    sport1Elem.querySelector('img').alt = 'Course à pieds';
+    sport1FastestElem.querySelector('img').src = './images/run-black.svg';
+    sport1FastestElem.querySelector('img').alt = 'Course à pieds';
+    sport1AverageElem.querySelector('img').src = './images/run-white.svg';
+    sport1AverageElem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport1 === 'Ride'){
-    sport1Elem.querySelector('img').src = './images/bike-black.svg';
-    sport1Elem.querySelector('img').alt = 'Cyclisme';
+    sport1FastestElem.querySelector('img').src = './images/bike-black.svg';
+    sport1FastestElem.querySelector('img').alt = 'Cyclisme';
+    sport1AverageElem.querySelector('img').src = './images/bike-white.svg';
+    sport1AverageElem.querySelector('img').alt = 'Cyclisme';
 }
 
 if(sport2 === 'Run'){
-    sport2Elem.querySelector('img').src = './images/run-white.svg';
-    sport2Elem.querySelector('img').alt = 'Course à pieds';
+    sport2FastestElem.querySelector('img').src = './images/run-white.svg';
+    sport2FastestElem.querySelector('img').alt = 'Course à pieds';
+    sport2AverageElem.querySelector('img').src = './images/run-white.svg';
+    sport2AverageElem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport2 === 'Ride'){
-    sport2Elem.querySelector('img').src = './images/bike-white.svg';
-    sport2Elem.querySelector('img').alt = 'Cyclisme';
+    sport2FastestElem.querySelector('img').src = './images/bike-white.svg';
+    sport2FastestElem.querySelector('img').alt = 'Cyclisme';
+    sport2AverageElem.querySelector('img').src = './images/bike-white.svg';
+    sport2AverageElem.querySelector('img').alt = 'Cyclisme';
 }
 
 if(sport3 === 'Run'){
-    sport3Elem.querySelector('img').src = './images/run-black.svg';
-    sport3Elem.querySelector('img').alt = 'Course à pieds';
+    longuestElem.querySelector('img').src = './images/run-black.svg';
+    longuestElem.querySelector('img').alt = 'Course à pieds';
 }
 if(sport3 === 'Ride'){
-    sport3Elem.querySelector('img').src = './images/bike-black.svg';
-    sport3Elem.querySelector('img').alt = 'Cyclisme';
+    longuestElem.querySelector('img').src = './images/bike-black.svg';
+    longuestElem.querySelector('img').alt = 'Cyclisme';
 }
 
 bestSport1 = getBest('activities', sport1, 'average_speed')
-sport1Elem.querySelector('.nombre-vitesse').innerHTML = (bestSport1.average_speed*3600/1000).toFixed(2);
-sport1Elem.querySelector('.nom-sortie').innerHTML = bestSport1.name;
+sport1FastestElem.querySelector('.nombre-vitesse').innerHTML = (bestSport1.average_speed*3600/1000).toFixed(2);
+sport1FastestElem.querySelector('.nom-sortie').innerHTML = bestSport1.name;
 
 bestSport2 = getBest('activities', sport2, 'average_speed')
-sport2Elem.querySelector('.nombre-vitesse').innerHTML = (bestSport2.average_speed*3600/1000).toFixed(2);
-sport2Elem.querySelector('.nom-sortie').innerHTML = bestSport2.name;
+sport2FastestElem.querySelector('.nombre-vitesse').innerHTML = (bestSport2.average_speed*3600/1000).toFixed(2);
+sport2FastestElem.querySelector('.nom-sortie').innerHTML = bestSport2.name;
 
-sport3Elem.querySelector('.nombre-vitesse').innerHTML = (bestSport3.distance/1000).toFixed(2);
-sport3Elem.querySelector('.nom-sortie').innerHTML = bestSport3.name;
+longuestElem.querySelector('.nombre-vitesse').innerHTML = (bestSport3.distance/1000).toFixed(2);
+longuestElem.querySelector('.nom-sortie').innerHTML = bestSport3.name;
 
-sport1Elem.querySelector('.date').innerHTML = new Date(bestSport1.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
-sport1Elem.querySelector('.heure').innerHTML = new Date(bestSport1.start_date_local).toLocaleTimeString();
+sport1FastestElem.querySelector('.date').innerHTML = new Date(bestSport1.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
+sport1FastestElem.querySelector('.heure').innerHTML = new Date(bestSport1.start_date_local).toLocaleTimeString();
 
-sport2Elem.querySelector('.date').innerHTML = new Date(bestSport2.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
-sport2Elem.querySelector('.heure').innerHTML = new Date(bestSport2.start_date_local).toLocaleTimeString();
+sport2FastestElem.querySelector('.date').innerHTML = new Date(bestSport2.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
+sport2FastestElem.querySelector('.heure').innerHTML = new Date(bestSport2.start_date_local).toLocaleTimeString();
 
-sport3Elem.querySelector('.date').innerHTML = new Date(bestSport3.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
-sport3Elem.querySelector('.heure').innerHTML = new Date(bestSport3.start_date_local).toLocaleTimeString();
+longuestElem.querySelector('.date').innerHTML = new Date(bestSport3.start_date_local).toLocaleDateString(undefined, { month: 'long', day: 'numeric' });
+longuestElem.querySelector('.heure').innerHTML = new Date(bestSport3.start_date_local).toLocaleTimeString();
 
-document.querySelector('.moyenne .nombre-moyenne').innerHTML = (getTotals().ride.distance/1000/getTotals().ride.count).toFixed(2);
+sport1AverageElem.querySelector('.nombre-moyenne').innerHTML = (getAverageDistance(sport1)/1000).toFixed(2);
+sport2AverageElem.querySelector('.nombre-moyenne').innerHTML = (getAverageDistance(sport2)/1000).toFixed(2);
