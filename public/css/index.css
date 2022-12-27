@@ -68,13 +68,18 @@
     z-index:10;
 }
 
+.milieu p {
+    font-size:35px;
+}
+
 progress {
     background-color: #c14000;
     color: #ffff;
     border: 0;
-    height: 4px;
-    width: 40vw;
-    transition : width 1s ease;
+    border-radius:25vw;
+    height: 10px;
+    width: 50vw;
+    transition : width 0.4s ease;
 }
 
 progress::-webkit-progress-bar {
