@@ -77,8 +77,12 @@
 .montagne-haute{
     position:absolute;
     bottom:-1px;
-    right:90px;
-    width:263px;
+    right:93px;
+    width:273px;
+}
+
+.stats .distance {
+    height:430px;
 }
 
 .distance {
