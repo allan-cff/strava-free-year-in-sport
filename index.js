@@ -56,7 +56,7 @@ router.get('/refresh', (req, res) => {
     axios.post(`https://www.strava.com/oauth/token?client_id=${process.env.ID}&client_secret=${process.env.SECRET}&refresh_token=${usersCredentials[userId].refresh_token}&grant_type=refresh_token`)
         .then(result => {
             if(result.status === 200){
-                usersCredentials[result.data.athlete.id] = {
+                usersCredentials[userId] = {
                     "refresh_token": result.data.refresh_token,
                 }
                 res.status(200).json({
