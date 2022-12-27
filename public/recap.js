@@ -23,6 +23,7 @@ document.querySelector('body main .profil .prenom').innerHTML = user.firstname;
 document.querySelector('.nombre-xl').innerHTML = getNbDaysActive();
 document.querySelector('.denivele .nombre-md').innerHTML = totals.total.climb.toFixed(0);
 document.querySelector('.distance .nombre-md').innerHTML = (totals.total.distance/1000).toFixed(0);
+document.querySelector('.heures .nombre-md').innerHTML = (totals.total.hours).toFixed(0);
 
 
 if(totals.run.hours > totals.ride.hours && totals.run.hours > totals.swim.hours){

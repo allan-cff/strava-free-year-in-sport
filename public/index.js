@@ -17,7 +17,7 @@ async function checkCredentials() {
 }
 
 async function refreshToken(){
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
     const userId = user.id;
     const response = await fetch(`/refresh?userId=${userId}`, {
         headers: {
