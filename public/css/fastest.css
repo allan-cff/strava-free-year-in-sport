@@ -61,11 +61,18 @@
     height:12vh;
     background-color: #495227;
     display:flex;
-    justify-content: end;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
     color:white;
+    padding-right:5vw;
 }
 
 .nombre-moyenne {
     text-align: end;
+}
+
+.kmh {
+    font-size:30px;
+    margin:0;
 }
