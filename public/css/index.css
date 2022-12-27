@@ -1,21 +1,71 @@
 .presentation {
     height: 82vh;
     background-color: #ffff;
+    overflow:hidden;
+    position:relative;
+}
+
+.rose{
+    position:absolute;
+    height: 7vh;
+    width:7vh;
+    border-radius:5vh;
+    background-color: #FFB4EE;
+    left : 7vw;
+    top:55vh;
+    z-index:20;
+}
+
+.kaki{
+    position:absolute;
+    height: 6vh;
+    width: 6vh;
+    border-radius:4vh;
+    background-color: #495227;
+    left : 20vw;
+    top:5vh;
+    z-index:1;
+}
+
+.bleu{
+    position:absolute;
+    height: 10vh;
+    width: 10vh;
+    border-radius:5vh;
+    background-color: #78DAE5;
+    left : 75vw;
+    top:10vh;
+    z-index:20;
+}
+
+.jaune{
+    position:absolute;
+    height: 15vh;
+    width: 15vh;
+    border-radius:8vh;
+    background-color: #C0CA53;
+    left : 65vw;
+    top:55vh;
+    z-index:1;
 }
 
 .milieu {
-    height:120vw;
-    width:100vw;
+    height:60vh;
+    width:60vh;
     text-align: center;
     background-color: #FC5200;
     padding : 0;
-    margin : 10vh 0;
     position: absolute;
-    border-radius:60vw/40vw;
+    top : 7vh;
+    left:-7vh;
+    right:-13vh;
+    border-radius:40vh;
     display : flex;
     flex-direction:column;
     align-items: center;
     justify-content: center;
+    overflow:hidden;
+    z-index:10;
 }
 
 progress {
