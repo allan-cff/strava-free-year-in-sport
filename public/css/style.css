@@ -8,13 +8,14 @@
 body {
     margin:0;
     font-family: Karla;
-    max-height:100vw;
+    max-height:100vh;
     height:100vh;
     background-color: rgb(0, 0, 0);
 }
 
 main {
     background-color:#F4F3EB;
+    height:75.5vh;
 }
 
 header {
@@ -95,6 +96,13 @@ h1 {
 h2 {
     padding-left:5vw;
     font-weight:400;
+    font-size : 30px;
+}
+
+.nombre-xxl {
+    padding-left:5vw;
+    font-size : 200px;
+    margin:0;
 }
 
 .nombre-xl {

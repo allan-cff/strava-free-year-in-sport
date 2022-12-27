@@ -9,7 +9,7 @@
 .annee {
     transform: rotateZ(-90deg);
     position : absolute;
-    bottom : 3vh;
+    bottom : 1vh;
     left : 0vw;
 }
 

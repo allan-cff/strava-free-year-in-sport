@@ -1,0 +1,41 @@
+
+#heures {
+    height:20%;
+    background-color: #78DAE5;
+    padding-top : 1vh;
+    border-bottom:solid 3px black;
+}
+
+h2 {
+    margin-bottom:0;
+}
+
+#calendrier {
+    height : 63%;
+    background-color: #F4F3EB;
+    border-bottom:solid 3px black;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin : auto;
+}
+
+#calendrier div {
+    height:10vh;
+    width:10vh;
+    border-radius:5vh;
+    background-color: #C0CA53;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    flex-direction: column;
+    font-size: 30px;
+    
+}
+
+#comp-21 {
+    height:6%;
+    display :flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right:5vw;
+}
