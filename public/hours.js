@@ -20,3 +20,6 @@ function getHours(storedAs = 'activities'){
 console.log(getHoursByMonth());
 console.log(getHours());
 console.log(getHours('2021-activities'));
+
+document.querySelector('#heures .nombre-xxl').innerHTML = getHours().toFixed(0);
+document.querySelector('#comp-21 h2:nth-child(2)').innerHTML = getHours('2021-activities').toFixed(0).toString(10) + 'H';
