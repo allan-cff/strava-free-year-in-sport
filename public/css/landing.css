@@ -14,6 +14,7 @@
     left : 7vw;
     top:55vh;
     z-index:20;
+    animation : 2s ease infinite alternate vibrateX
 }
 
 .kaki{
@@ -25,6 +26,7 @@
     left : 20vw;
     top:5vh;
     z-index:1;
+    animation : 2s ease infinite alternate-reverse vibrateY
 }
 
 .bleu{
@@ -36,6 +38,7 @@
     left : 75vw;
     top:10vh;
     z-index:20;
+    animation : 2s ease infinite alternate vibrateY
 }
 
 .jaune{
@@ -47,6 +50,7 @@
     left : 65vw;
     top:55vh;
     z-index:1;
+    animation : 8s ease infinite alternate vibrateY
 }
 
 .milieu {
@@ -100,4 +104,14 @@
     color:white;
     width:55vw;
     text-align: end;
+}
+
+@keyframes vibrateX {
+    from { transform: translateX(-10%); }
+    to   { transform: translateX(10%); }
+}
+
+@keyframes vibrateY {
+    from { transform: translateY(-10%); }
+    to   { transform: translateY(10%); }
 }
