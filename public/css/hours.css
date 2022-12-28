@@ -16,7 +16,6 @@ h2 {
     border-bottom:solid 3px black;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin : auto;
 }
 
 #calendrier div {
