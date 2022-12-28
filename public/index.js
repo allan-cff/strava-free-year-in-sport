@@ -243,8 +243,14 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
 }
 
 function dataReady(){
-    document.querySelector('footer').style.visibility = "visible";
-    document.querySelector('body header').style.visibility = "visible";
+    document.querySelector('.loading').style.opacity = 0;
+    setTimeout(() => {
+        document.querySelector('.loading').style.display = "none";
+        document.querySelector('.ready').style.display = "block";
+        setTimeout(() => {
+            document.querySelector('.ready').style.opacity = 1;
+        }, 250);
+    }, 250);
 }
 
 checkCredentials()
@@ -278,7 +284,7 @@ checkCredentials()
                 progress.value = parseInt(progress.value, 10) + 5;
                 console.log(progress.value);
                 if(progress.value === 100){
-                    dataReady();
+                    setTimeout(dataReady, 300);
                 }
             });
 
@@ -290,7 +296,7 @@ checkCredentials()
                 progress.value = parseInt(progress.value, 10) + 5;
                 console.log(progress.value);
                 if(progress.value === 100){
-                    dataReady();
+                    setTimeout(dataReady, 300);
                 }
             });
                 

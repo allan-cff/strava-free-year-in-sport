@@ -121,3 +121,26 @@ progress::-moz-progress-bar {
     left: 3px;
     max-width: calc(50vw - 6px);
 }
+
+.ready a {
+    background-color: #1E2C43;
+    color: #ffff;
+    text-decoration: none;
+    padding: 0.5em 5vw;
+    border: none;
+    border-radius: 1vw;
+    font-size: 35px;
+    font-family: 'Karla';
+}
+
+.ready {
+    transition : opacity 0.5s ease;
+    opacity: 0;
+    display: none;
+}
+
+.loading {
+    transition : opacity 0.5s ease;
+    opacity: 1;
+    display: block;
+}
