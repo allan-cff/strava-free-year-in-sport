@@ -1,9 +1,5 @@
-header {
-    visibility:hidden;
-}
-
-footer {
-    visibility:hidden;
+main {
+    height: 89vh;
 }
 
 .presentation {
