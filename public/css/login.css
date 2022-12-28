@@ -9,6 +9,7 @@ body {
 main {
     overflow: hidden;
     position: relative;
+    height: 100vh;
 }
 
 
@@ -92,6 +93,7 @@ main {
 }
 
 #accountAuthButton {
+    visibility: hidden;
     text-align: center;
     margin-top : 3vh;
 }

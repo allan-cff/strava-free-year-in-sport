@@ -6,3 +6,7 @@ fetch('/appid', {
             });
         }
     )
+
+document.querySelector('#conditions').addEventListener('click', () => {
+    document.querySelector('#accountAuthButton').style.visibility = "visible"
+})    
