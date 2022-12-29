@@ -28,7 +28,15 @@ h2 {
     display:flex;
     flex-direction: column;
     font-size: 30px;
-    
+}
+
+.best-month {
+    background-color: #fc5200 !important;
+    z-index: 10;
+}
+
+.best-month p {
+    margin: 0.25em 0;
 }
 
 #comp-21 {
