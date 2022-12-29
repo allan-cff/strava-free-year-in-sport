@@ -86,10 +86,11 @@ async function getUserProfile(){
     });
 }
 
-async function getUserActivities(startDate, endDate, options={storeAs : 'activities', page : 1}){
+async function getUserActivities(startDate, endDate, options={storeAs : 'activities', page : 1, checkingCacheFromLast : false}){
     options.storeAs = options.storeAs || 'activities';
     options.page = options.page || 1;
-    console.log('Getting user activities stocked as ', options.storeAs);
+    options.checkingCacheFromLast = options.checkingCacheFromLast || false;
+    console.log('Getting user activities stocked as ', options.storeAs, ' page ', options.page);
     const token = sessionStorage.getItem('user_token');
     const response = await fetch(`https://www.strava.com/api/v3/athlete/activities?before=${endDate/1000}&after=${startDate/1000}&page=${options.page}`, {
         headers: {
@@ -108,18 +109,44 @@ async function getUserActivities(startDate, endDate, options={storeAs : 'activit
     if(response.status === 200){
         const res = await response.json();
         let prevRes = JSON.parse(localStorage.getItem(options.storeAs));
-        alreadyCached = false;
-        for(const activity of res){
-            if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
-                prevRes.push(activity);
-            } else {
-                alreadyCached = true;
+        let alreadyCached;
+        if(!options.checkingCacheFromLast){
+            alreadyCached = false;
+            for(const activity of res){
+                if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
+                    prevRes.push(activity);
+                } else {
+                    alreadyCached = true;
+                }
+            }
+        } else {
+            alreadyCached = true;
+            for(const activity of res){
+                if(!(prevRes.find(a => a.id === activity.id))){  // checking for no doubles (page refresh for example)
+                    prevRes.push(activity);
+                    alreadyCached = false;
+                }    
             }
         }
         localStorage.setItem(options.storeAs, JSON.stringify(prevRes));
-        if(res.length === 30 && !alreadyCached){
+        if(res.length === 30 && !alreadyCached && !options.checkingCacheFromLast){
             options.page = options.page + 1;
             await getUserActivities(startDate, endDate, options); // Default per page results is 30 => run for next page
+        }
+        if(options.page === 1 && alreadyCached){
+            if(prevRes.length % 30 === 0){
+                options.page = Math.round(prevRes.length / 30) + 1;
+            } else {
+                options.page = Math.round(prevRes.length / 30);
+            }
+            options.checkingCacheFromLast = true;
+            await getUserActivities(startDate, endDate, options); // Checking if all activities from last page are cached too
+        }
+        if(options.checkingCacheFromLast && !alreadyCached){
+            localStorage.setItem(options.storeAs, JSON.stringify([]));
+            options.checkingCacheFromLast = false;
+            options.page = 1;
+            await getUserActivities(startDate, endDate, options);
         }
         console.log('Successfully got user activities stocked as ', options.storeAs);
     }    
@@ -295,7 +322,7 @@ checkCredentials()
         progress.value = parseInt(progress.value, 10) + 10;
         console.log(progress.value);
 
-        getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.now())
+        getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.parse("2023-01-01T00:00:00.000"))
             .then(() => {
                 progress.value = parseInt(progress.value, 10) + 35;
                 console.log(progress.value);
