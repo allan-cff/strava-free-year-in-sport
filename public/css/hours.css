@@ -11,11 +11,17 @@ h2 {
 }
 
 #calendrier {
-    height : 63%;
+    height : 57%;
+    width:90vw;
+    padding : 4% 5vw;
     background-color: #F4F3EB;
     border-bottom:solid 3px black;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    align-content: space-between;
+    justify-items: center;
+    align-items: center;
 }
 
 #calendrier div {
