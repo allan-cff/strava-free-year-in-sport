@@ -28,3 +28,7 @@ console.log(getPRNumber());
 console.log(getKudosNumber());
 
 numberAnimation('.record .medaille .nombre-sm', getPRNumber());
+document.querySelector("#kudos .nombre-md").innerHTML = getTotals().total.kudos;
+const mostKudoed = JSON.parse(localStorage.getItem('activities')).find(a => a.id === parseInt(localStorage.getItem('most-kudoed'), 10));
+document.querySelector("#kudos #most-kudoed .nombre-md").innerHTML = mostKudoed.kudos_count;
+document.querySelector("#kudos #most-kudoed .texte-kudos").innerHTML = mostKudoed.name;

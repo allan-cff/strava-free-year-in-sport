@@ -193,6 +193,10 @@ function sortByKudos(storedAs='activities'){
     return activities;
 }
 
+function getMostKudoed(storedAs='activities'){
+    return sortByKudos(storedAs)[0].id;
+}
+
 function getTotals(storedAs = 'activities', storeAs = 'totals'){
     console.log('Counting Totals');
     const totals = {
@@ -338,6 +342,8 @@ checkCredentials()
                 getTotals();
                 progress.value = parseInt(progress.value, 10) + 5;
                 console.log(progress.value);
+
+                localStorage.setItem('most-kudoed', getMostKudoed());
                 if(progress.value === 100){
                     setTimeout(dataReady, 300);
                 }
