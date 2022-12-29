@@ -21,3 +21,28 @@
     align-items: center;
     justify-content: center;
 }
+
+#kudos {
+    height : 13vh;
+    background-color: #002E51;
+    color:white;
+    padding-top : 2vh;
+    padding-right : 5vw;
+    display :flex;
+    gap:5vw;
+    
+}
+
+h2 {
+    margin :0;
+}
+
+.nombre-md {
+    color:#C0CA53;
+}
+
+.texte-kudos {
+    padding-left:5vw;
+    font-size : 30px;
+    margin:0;
+}
