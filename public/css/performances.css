@@ -22,6 +22,15 @@
     justify-content: center;
 }
 
+
+
+.medaille img {
+    width : 2vh;
+    margin : 1vw;
+}
+
+
+
 #kudos {
     height : 13vh;
     background-color: #002E51;
@@ -37,7 +46,9 @@ h2 {
     margin :0;
 }
 
-.nombre-md {
+
+
+.nb-kudos {
     color:#C0CA53;
 }
 
