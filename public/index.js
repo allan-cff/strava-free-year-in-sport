@@ -208,6 +208,11 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
             kudos : 0,
             count : 0
         },
+        heartrate : {
+            total : 0,
+            count : 0,
+            max : 0
+        },
         ride : {
             climb : 0,
             distance : 0,
@@ -248,6 +253,11 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
         totals.total.pr += activity.pr_count;
         totals.total.kudos += activity.kudos_count;
         totals.total.count += 1;
+        if("average_heartrate" in activity){
+            totals.heartrate.count += 1;
+            totals.heartrate.total += activity.average_heartrate;
+            totals.heartrate.max = Math.max(totals.heartrate.max, activity.average_heartrate);
+        }
         switch(activity.type){
             case 'Ride' :
                 totals.ride.climb += activity.total_elevation_gain;
