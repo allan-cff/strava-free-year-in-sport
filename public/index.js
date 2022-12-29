@@ -16,6 +16,22 @@ async function checkCredentials() {
     }
 }
 
+function tooManyRequests(){
+    const date = new Date();
+    if(date.getMinutes() < 15){
+        date.setMinutes(15);
+    } else if(date.getMinutes() < 30){
+        date.setMinutes(30);
+    } else if(date.getMinutes() < 45){
+        date.setMinutes(45);
+    } else {
+        date.setMinutes(0);
+        date.setHours(date.getHours() + 1);
+    }
+    window.alert(`Number of requests allowed by Strava exceeded. Please wait until ${date.toLocaleTimeString()} in ${date - Date.now()}ms`);
+    setTimeout(() => location.reload(), date - Date.now())
+}
+
 async function refreshToken(){
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user.id;
@@ -57,6 +73,10 @@ async function getUserProfile(){
             console.log(response);
             checkCredentials();
         }
+        if(response.status === 429){
+            console.log(response);
+            tooManyRequests();
+        }
         if(response.status === 200){
             response.json().then(res => {
                 localStorage.setItem('user', JSON.stringify(res));
@@ -80,6 +100,10 @@ async function getUserActivities(startDate, endDate, options={storeAs : 'activit
     if(response.status === 401){
         console.log(response);
         checkCredentials();
+    }
+    if(response.status === 429){
+        console.log(response);
+        tooManyRequests();
     }
     if(response.status === 200){
         const res = await response.json();
@@ -116,6 +140,10 @@ async function getDetailledActivity(id){
         if(response.status === 401){
             console.log(response);
             checkCredentials();
+        }
+        if(response.status === 429){
+            console.log(response);
+            tooManyRequests();
         }
         if(response.status === 200){
             response.json().then(res => {
