@@ -19,6 +19,27 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
     return best;
 }
 
+function getTotals(){
+    return JSON.parse(localStorage.getItem('totals'));
+}
+
+function getActivity(id, storedAs='activities'){
+    return JSON.parse(localStorage.getItem(storedAs)).find(act => act.id === id);
+}
+
+function parseSeconds(seconds){
+    const hours = (seconds/60/60).toFixed(0);
+    seconds -= hours*60*60;
+    const minutes = (seconds/60).toFixed(0);
+    seconds -= minutes*60;
+    if(hours > 0){
+        return hours + ':' + minutes + ':' + seconds;
+    } else {
+        return minutes + ':' + seconds;
+    }
+}
+
+const totals = getTotals();
 const bestRideEquipment = getBestEquipment('ride');
 if(bestRideEquipment !== null){
     const bestBike = JSON.parse(localStorage.getItem(bestRideEquipment.id));
@@ -36,3 +57,9 @@ if(bestRunEquipment !== null){
     document.querySelector('#cap .nb-km').innerHTML = (bestShoes.year_distance/1000).toFixed(0);
     document.querySelector('#cap .heures').innerHTML = `Vous avez passé ${bestShoes.year_hours.toFixed(0)}h en compagnie de ${bestShoes.nickname}`;
 }
+if(totals.heartrate.count > 0){
+    document.querySelector('#fc .nombre-sm').innerHTML = (totals.heartrate.total / totals.heartrate.count).toFixed(1);
+    const maxHeartrateActivity = getActivity(totals.heartrate.maxId);
+    document.querySelector('#max #sortie-max p:nth-child(1)').innerHTML = maxHeartrateActivity.name;
+    document.querySelector('#max #sortie-max p:nth-child(2)').innerHTML = `${new Date(maxHeartrateActivity.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} | ${(maxHeartrateActivity.distance/1000).toFixed(2)}km | ${parseSeconds(maxHeartrateActivity.moving_time)}`;
+}    
