@@ -60,4 +60,35 @@ h2 {
 
 #everest {
     height : 20vh;
+    background-color: #C0CA53;
+    display:flex;
+
+}
+
+#everest>p {
+    font-size: 32px;
+    margin : 0;
+    padding : 3vh 0 0 5vw ;
+    width : 30vw;
+}
+
+#everest div {
+    padding-top : 3vh;
+    background-image: url(../images/haute-montagne-large_1.svg);
+    background-position: bottom;
+    background-repeat:no-repeat;
+    background-size:contain;
+}
+
+#everest div {
+    height : 90%;
+    width : 60vw;
+}
+
+#everest div p {
+    color:white;
+    align-self: center;
+    text-align: center;
+    margin-top : 9vh;
+    padding-left:0;
 }
