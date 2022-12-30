@@ -124,8 +124,16 @@
 }
 
 #triangle-max p{
-    padding-left : 14%;
-    padding-top : 7vh;
+    width : 37vw;
+    text-align: center;
+    
+}
+
+#bpm {
+    padding-top : 5vh;
+    padding-left: 5vw;
+    font-size:30px;
+    margin:0;
 }
 
 #sortie-max {
