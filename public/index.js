@@ -181,6 +181,36 @@ async function getDetailledActivity(id){
     });
 }
 
+function getDetailledEquipment(equipment){
+    console.log('Getting detailled equipment ', equipment.id);
+    if(localStorage.getItem(equipment.id)){
+        return JSON.parse(localStorage.getItem(equipment.id));
+    }
+    const token = sessionStorage.getItem('user_token');
+    fetch(`https://www.strava.com/api/v3/gear/${equipment.id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET'
+    }).then(response => {
+        if(response.status === 401){
+            console.log(response);
+            checkCredentials();
+        }
+        if(response.status === 429){
+            console.log(response);
+            tooManyRequests();
+        }
+        if(response.status === 200){
+            response.json().then(res => {
+                equipment
+                localStorage.setItem(equipment.id, JSON.stringify(Object.assign(equipment, res)));
+                console.log('Successfully got detailled equipment ', equipment.id);
+            });
+        }    
+    });
+}
+
 function sortByKudos(storedAs='activities'){
     console.log('Sorting by kudo');
     const activities = JSON.parse(localStorage.getItem(storedAs));
@@ -311,6 +341,50 @@ function getMostKudoedPicturesActivityId(storedAs='activities', limit=4, picture
     return result;
 }
 
+function getEquipments(storedAs = 'activities', storeAs = 'equipments'){
+    const activities = JSON.parse(localStorage.getItem(storedAs));
+    const equipments = {};
+    for(const activity of activities){
+        if(activity.gear_id !== null){
+            if(activity.gear_id in equipments){
+                equipments[activity.gear_id].year_hours += activity.moving_time/60/60;
+                equipments[activity.gear_id].year_count += 1;
+                equipments[activity.gear_id].year_distance += activity.distance;
+            } else {
+                equipments[activity.gear_id] = {
+                    "sport" : activity.type.toLowerCase(),
+                    "year_hours" : activity.moving_time/60/60,
+                    "year_count" : 1,
+                    "year_distance" : activity.distance,
+                    "id" : activity.gear_id
+                }
+            }
+        }
+    }
+    localStorage.setItem(storeAs, JSON.stringify(equipments));
+}
+
+function getBestEquipment(sportType, storedAs = 'equipments'){
+    const equipments = JSON.parse(localStorage.getItem(storedAs));
+    sportType = sportType.toLowerCase();
+    const best = Object.values(equipments).reduce((maxValue, currentValue) => {
+        if(currentValue.sport === sportType && maxValue.sport !== sportType){
+            return currentValue;
+        }
+        if(currentValue.sport === sportType && maxValue.sport === sportType){
+            if(currentValue.hours > maxValue.hours){
+                return currentValue;
+            }    
+            return maxValue;
+        }
+        return maxValue;
+    })
+    if(best.sport !== sportType){
+        return null;
+    }
+    return best;
+}
+
 function dataReady(){
     document.querySelector('.loading').style.opacity = 0;
     setTimeout(() => {
@@ -354,6 +428,18 @@ checkCredentials()
                 console.log(progress.value);
 
                 localStorage.setItem('most-kudoed', getMostKudoed());
+
+                getEquipments();
+                const bestBike = getBestEquipment('ride');
+                const bestShoes = getBestEquipment('run');
+                
+                if(bestBike !== null){
+                    getDetailledEquipment(bestBike);
+                }
+                if(bestShoes !== null){
+                    getDetailledEquipment(bestShoes);
+                }
+
                 if(progress.value === 100){
                     setTimeout(dataReady, 300);
                 }
