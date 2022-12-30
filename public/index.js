@@ -241,7 +241,8 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
         heartrate : {
             total : 0,
             count : 0,
-            max : 0
+            max : 0,
+            maxId : undefined
         },
         ride : {
             climb : 0,
@@ -286,7 +287,10 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
         if("average_heartrate" in activity){
             totals.heartrate.count += 1;
             totals.heartrate.total += activity.average_heartrate;
-            totals.heartrate.max = Math.max(totals.heartrate.max, activity.average_heartrate);
+            if(activity.average_heartrate > totals.heartrate.max){
+                totals.heartrate.max = activity.average_heartrate;
+                totals.heartrate.maxId = activity.id;
+            }
         }
         switch(activity.type){
             case 'Ride' :
