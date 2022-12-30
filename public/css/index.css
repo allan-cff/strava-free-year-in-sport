@@ -129,6 +129,14 @@ progress::-moz-progress-bar {
     font-family: 'Karla';
 }
 
+.ready p {
+    margin : 0.5em;
+}
+
+#decouvrez {
+    margin-bottom : 3vh;
+}
+
 .ready {
     transition : opacity 0.5s ease;
     opacity: 0;

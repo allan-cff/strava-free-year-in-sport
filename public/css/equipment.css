@@ -1,18 +1,76 @@
 #velo {
-    height : 20vh;
+    height : 17vh;
     background-color: #1A2D45;
+    color :white;
+}
+
+#velo .top img {
+    fill:white;
+    color : white;
+    stroke : white;
 }
 
 #cap {
-    height : 20vh;
+    height : 17vh;
     background-color: #C0CA53;
 }
 
+.top {
+    display :flex;
+    padding:3vw 5vw 0 5vw;
+}
 
+.top img {
+    height : 12vw;
+    
+}
+
+.description {
+    padding-left : 5vw;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nom {
+    font-size:40px;
+    margin : 0;
+}
+
+.modele {
+    font-size : 30px;
+    margin : 0;
+}
+
+.bottom {
+    display :flex;
+    padding:3vw 5vw 3vw 5vw;
+}
+
+.distance {
+    display:flex;
+    width : 20vw;
+    align-items: flex-end;
+}
+
+.nb-km {
+    font-size : 100px;
+    margin : 0;
+}
+
+.km {
+    font-size : 40px;
+    margin : 0;
+}
+
+.heures {
+    font-size : 30px;
+    margin:0;
+}
 
 #fc {
     background-color: #495227;
-    height:20vh;
+    height:15vh;
     display:flex;
     flex-direction: column;
     align-items:center;
@@ -22,10 +80,10 @@
 }
 
  #heart {
-    height : 30vw;
+    height : 27vw;
     margin : 0 35vw;
     position : absolute;
-    top : 3vh;
+    top : 1vh;
     z-index:1;
  }
 
@@ -33,6 +91,7 @@
     position: relative;
     z-index:10;
     padding-left:0;
+    margin:0;
  }
 
  #fc p {
@@ -42,6 +101,33 @@
 
 
 #max {
-    height : 20vh;
+    height : 12.5vh;
     background-color: #FC5200;
+    padding-top : 3vw;
+    position:relative;
+}
+
+#max h2 {
+    margin : 0;
+}
+
+#triangle-max {
+    background-image: url("../images/triangle-max.svg");
+    background-repeat: no-repeat;
+    background-position: left ;
+    position :absolute;
+    bottom : 0;
+    height:100%;
+    width : 100%;
+}
+
+#triangle-max p{
+    padding-left : 14%;
+    padding-top : 7vh;
+}
+
+#sortie-max {
+    font-size : 30px;
+    padding-left:50vw;
+    width : 40vw;
 }
