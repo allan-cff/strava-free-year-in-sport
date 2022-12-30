@@ -4,11 +4,6 @@
     color :white;
 }
 
-#velo .top img {
-    fill:white;
-    color : white;
-    stroke : white;
-}
 
 #cap {
     height : 17vh;
@@ -20,9 +15,9 @@
     padding:3vw 5vw 0 5vw;
 }
 
-.top img {
+.top svg {
     height : 12vw;
-    
+    width : 12vw
 }
 
 .description {
