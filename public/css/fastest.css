@@ -42,8 +42,9 @@
     padding-bottom:3vh;
 }
 
-.description-activite img {
+.description-activite svg {
     width: 10vw;
+    height:10vw;
 }
 
 .vitesse {
