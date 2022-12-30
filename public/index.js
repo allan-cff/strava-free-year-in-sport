@@ -392,13 +392,22 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
 function dataReady(){
     document.querySelector('.loading').style.opacity = 0;
     setTimeout(() => {
-        document.querySelector('.loading').style.display = "none";
-        document.querySelector('.ready').style.display = "block";
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.ready').style.display = 'block';
         setTimeout(() => {
             document.querySelector('.ready').style.opacity = 1;
         }, 250);
     }, 250);
 }
+
+document.querySelector('.ready a').addEventListener('click', (e) => {
+    let button = e.target;
+    let requestMethod = button.requestFullScreen || button.webkitRequestFullScreen || button.mozRequestFullScreen || button.msRequestFullScreen;
+    if (requestMethod) {
+        requestMethod.call(document.body);
+    }
+    button.href = 'landing.html';
+})
 
 checkCredentials()
     .then(async () => {
