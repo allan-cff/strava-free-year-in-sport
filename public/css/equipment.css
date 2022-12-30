@@ -1,0 +1,47 @@
+#velo {
+    height : 20vh;
+    background-color: #1A2D45;
+}
+
+#cap {
+    height : 20vh;
+    background-color: #C0CA53;
+}
+
+
+
+#fc {
+    background-color: #495227;
+    height:20vh;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    position:relative;
+    color:black;
+}
+
+ #heart {
+    height : 30vw;
+    margin : 0 35vw;
+    position : absolute;
+    top : 3vh;
+    z-index:1;
+ }
+
+ #fc h2 {
+    position: relative;
+    z-index:10;
+    padding-left:0;
+ }
+
+ #fc p {
+    position: relative;
+    z-index : 10;
+ }
+
+
+#max {
+    height : 20vh;
+    background-color: #FC5200;
+}
