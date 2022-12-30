@@ -62,5 +62,5 @@ if(totals.heartrate.count > 0){
     const maxHeartrateActivity = getActivity(totals.heartrate.maxId);
     document.querySelector('#max #sortie-max p:nth-child(1)').innerHTML = maxHeartrateActivity.name;
     document.querySelector('#max #sortie-max p:nth-child(2)').innerHTML = `${new Date(maxHeartrateActivity.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} | ${(maxHeartrateActivity.distance/1000).toFixed(2)}km | ${parseSeconds(maxHeartrateActivity.moving_time)}`;
-    document.querySelector('#max .nombre-md').innerHTML = maxHeartrateActivity.average_heartrate;
+    document.querySelector('#max .nombre-md').innerHTML = maxHeartrateActivity.average_heartrate.toFixed(0);
 }    
