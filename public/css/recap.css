@@ -59,8 +59,9 @@
     justify-content: center;
 }
 
-.top-sport img {
+.top-sport svg {
     width:17vw;
+    height : 17vw;
     padding-left:5vw;
     margin-top:1vh;
     fill : white;
