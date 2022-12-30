@@ -28,12 +28,12 @@ function getActivity(id, storedAs='activities'){
 }
 
 function parseSeconds(seconds){
-    const hours = (seconds/60/60).toFixed(0);
-    seconds -= hours*60*60;
-    const minutes = (seconds/60).toFixed(0);
-    seconds -= minutes*60;
+    const hours = Math.floor(seconds/60/60);
+    seconds = seconds - hours*60*60;
+    const minutes = Math.floor(seconds/60);
+    seconds = seconds - minutes*60;
     if(hours > 0){
-        return hours + ':' + minutes + ':' + seconds;
+        return ('0', hours).slice(-2) + ':' + ('0', minutes).slice(-2) + ':' + ('0', seconds).slice(-2);
     } else {
         return minutes + ':' + seconds;
     }
@@ -62,4 +62,5 @@ if(totals.heartrate.count > 0){
     const maxHeartrateActivity = getActivity(totals.heartrate.maxId);
     document.querySelector('#max #sortie-max p:nth-child(1)').innerHTML = maxHeartrateActivity.name;
     document.querySelector('#max #sortie-max p:nth-child(2)').innerHTML = `${new Date(maxHeartrateActivity.start_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} | ${(maxHeartrateActivity.distance/1000).toFixed(2)}km | ${parseSeconds(maxHeartrateActivity.moving_time)}`;
+    document.querySelector('#max .nombre-md').innerHTML = maxHeartrateActivity.average_heartrate;
 }    
