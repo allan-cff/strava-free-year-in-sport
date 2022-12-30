@@ -27,11 +27,21 @@ document.querySelector('.heures .nombre-md').innerHTML = (totals.total.hours).to
 
 
 if(totals.run.hours > totals.ride.hours && totals.run.hours > totals.swim.hours){
-    document.querySelector('.top-sport img').src = './images/run-white.svg';
-    document.querySelector('.top-sport img').alt = 'Course à pieds';
+    fetch('images/sports/bike.svg')
+        .then(response => response.text())
+        .then(text => {
+            document.querySelector('.top-sport h2').insertAdjacentHTML("beforeend", text)
+            document.querySelector('.top-sport svg').alt = 'Course à pieds';
+        })
+    document.querySelector('.top-sport svg').src = './images/run-white.svg';
+    document.querySelector('.top-sport svg').alt = 'Course à pieds';
 }
 
 if(totals.ride.hours > totals.run.hours && totals.ride.hours > totals.swim.hours){
-    document.querySelector('.top-sport img').src = './images/bike-white.svg';
-    document.querySelector('.top-sport img').alt = 'Cyclisme';
+    fetch('images/sports/bike.svg')
+        .then(response => response.text())
+        .then(text => {
+            document.querySelector('.top-sport h2').insertAdjacentHTML("beforeend", text)
+            document.querySelector('.top-sport svg').alt = 'Cyclisme';
+        })
 }
