@@ -14,17 +14,8 @@ function getDaysActive(){
 }
 
 function getSportPercentage(){
-    const activities = JSON.parse(localStorage.getItem('activities'));
-    let yearlyDuration = 0;
-    const sportDuration = {};
-    for(const activity of activities){
-        yearlyDuration += activity.moving_time;
-        if(sportDuration[activity.sport_type] === undefined){
-            sportDuration[activity.sport_type] = activity.moving_time;
-        } else {
-            sportDuration[activity.sport_type] += activity.moving_time;
-        }
-    }
+    const sportDuration = JSON.parse(localStorage.getItem('sport-duration'));
+    let yearlyDuration = Object.values(sportDuration).reduce((sum, val) => sum + val, 0);
     for(const [key, value] of Object.entries(sportDuration)){
         console.log(key, value);
         sportDuration[key] = value / yearlyDuration;
@@ -32,13 +23,14 @@ function getSportPercentage(){
     return sportDuration;    
 }
 
-function getSrc(sport){
-    if(sport === 'MountainBikeRide' || sport === 'Ride'){
-        return './images/bike-black.svg';
-    }
-    if(sport === 'Run' || sport === 'Hike'){
-        return './images/run-black.svg'
-    }
+function setIcon(selector, activityType, alt){
+    const icons = JSON.parse(localStorage.getItem('sport-icons'));
+    fetch(icons[activityType])
+    .then(response => response.text())
+    .then(text => {
+        document.querySelector(selector).insertAdjacentHTML('afterbegin', text);
+        document.querySelector(selector + " svg").alt = alt;
+    });
 }
 
 const sportPercentage = getSportPercentage();
@@ -48,15 +40,7 @@ document.querySelector(`.nombre-xl`).innerHTML = daysActive.reduce((sum, current
 
 const months = ['janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre'];
 const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const languages = {
-    "fr": {
-        "Ride" : "Cyclisme",
-        "MountainBikeRide" : "VTT",
-        "Run" : "Course",
-        "Hike" : "Randonnée",
-        "Swim" : "Natation"
-    }
-}
+const languages = JSON.parse(localStorage.getItem('sport-languages'))
 
 let streak = 0;
 let maxStreak = 0;
@@ -88,7 +72,6 @@ for(let i = 1; i < 5; i++){
         }
     }
     document.querySelector(`body main .top-sport #top-${i} p`).innerHTML = `${(maxPercentage*100).toFixed(0)}%<br>${languages.fr[maxPercentageSport] || maxPercentageSport}`;
-    document.querySelector(`body main .top-sport #top-${i} img`).src = getSrc(maxPercentageSport);
-    document.querySelector(`body main .top-sport #top-${i} img`).alt = languages.fr[maxPercentageSport] || maxPercentageSport;
+    setIcon(`body main .top-sport #top-${i} .sport-${i}`, maxPercentageSport, languages.fr[maxPercentageSport] || maxPercentageSport)
     delete sportPercentage[maxPercentageSport];
 }

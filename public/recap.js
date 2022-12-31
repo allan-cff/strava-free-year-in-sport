@@ -15,8 +15,22 @@ function getNbDaysActive(){
     return nbDaysActive;
 }
 
+function setIcon(selector, activityType, alt){
+    const icons = JSON.parse(localStorage.getItem('sport-icons'));
+    fetch(icons[activityType])
+    .then(response => response.text())
+    .then(text => {
+        document.querySelector(selector).insertAdjacentHTML('afterbegin', text);
+        document.querySelector(selector + " svg").alt = alt;
+    });
+}
+
 const user = JSON.parse(localStorage.getItem('user'));
 const totals = JSON.parse(localStorage.getItem('totals'));
+const languages = JSON.parse(localStorage.getItem('sport-languages'));
+const sportsArray = Object.keys(totals).filter(sport => sport !== "total" && sport !== "heartrate");
+sportsArray.sort((a, b) => totals[b].hours - totals[a].hours);
+
 document.querySelector('body main .profil .pp-strava').src = user.profile;
 document.querySelector('body main .profil .nom').innerHTML = user.lastname;
 document.querySelector('body main .profil .prenom').innerHTML = user.firstname;
@@ -25,23 +39,4 @@ document.querySelector('.denivele .nombre-md').innerHTML = totals.total.climb.to
 document.querySelector('.distance .nombre-md').innerHTML = (totals.total.distance/1000).toFixed(0);
 document.querySelector('.heures .nombre-md').innerHTML = (totals.total.hours).toFixed(0);
 
-
-if(totals.run.hours > totals.ride.hours && totals.run.hours > totals.swim.hours){
-    fetch('images/sports/bike.svg')
-        .then(response => response.text())
-        .then(text => {
-            document.querySelector('.top-sport h2').insertAdjacentHTML("beforeend", text)
-            document.querySelector('.top-sport svg').alt = 'Course à pieds';
-        })
-    document.querySelector('.top-sport svg').src = './images/run-white.svg';
-    document.querySelector('.top-sport svg').alt = 'Course à pieds';
-}
-
-if(totals.ride.hours > totals.run.hours && totals.ride.hours > totals.swim.hours){
-    fetch('images/sports/bike.svg')
-        .then(response => response.text())
-        .then(text => {
-            document.querySelector('.top-sport h2').insertAdjacentHTML("beforeend", text)
-            document.querySelector('.top-sport svg').alt = 'Cyclisme';
-        })
-}
+setIcon('.top-sport h2', sportsArray[0], languages.fr[sportsArray[0]] || sportsArray[0])

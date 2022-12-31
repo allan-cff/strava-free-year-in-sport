@@ -243,38 +243,7 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
             count : 0,
             max : 0,
             maxId : undefined
-        },
-        ride : {
-            climb : 0,
-            distance : 0,
-            hours : 0,
-            pr: 0,
-            kudos : 0,
-            count : 0
-        },
-        run : {
-            climb : 0,
-            distance : 0,
-            hours : 0,
-            pr: 0,
-            kudos : 0,
-            count : 0
-        },
-        hike : {
-            climb : 0,
-            distance : 0,
-            hours : 0,
-            pr: 0,
-            kudos : 0,
-            count : 0
-        },
-        swim : {
-            distance : 0,
-            hours : 0,
-            pr: 0,
-            kudos : 0,
-            count : 0
-        },
+        }
     };
     const activities = JSON.parse(localStorage.getItem(storedAs));
     for(const activity of activities){
@@ -292,38 +261,22 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
                 totals.heartrate.maxId = activity.id;
             }
         }
-        switch(activity.type){
-            case 'Ride' :
-                totals.ride.climb += activity.total_elevation_gain;
-                totals.ride.distance += activity.distance;
-                totals.ride.hours += activity.moving_time/60/60;
-                totals.ride.pr += activity.pr_count;
-                totals.ride.kudos += activity.kudos_count;
-                totals.ride.count += 1;
-                break;
-            case 'Run' :
-                totals.run.climb += activity.total_elevation_gain;
-                totals.run.distance += activity.distance;
-                totals.run.hours += activity.moving_time/60/60;
-                totals.run.pr += activity.pr_count;
-                totals.run.kudos += activity.kudos_count;
-                totals.run.count += 1;
-                break;
-            case 'Swim' :
-                totals.swim.distance += activity.distance;
-                totals.swim.hours += activity.moving_time/60/60;
-                totals.swim.pr += activity.pr_count;
-                totals.swim.kudos += activity.kudos_count;
-                totals.swim.count += 1;
-                break;
-            case 'Hike' :
-                totals.hike.climb += activity.total_elevation_gain;
-                totals.hike.distance += activity.distance;
-                totals.hike.hours += activity.moving_time/60/60;
-                totals.hike.pr += activity.pr_count;
-                totals.hike.kudos += activity.kudos_count;
-                totals.hike.count += 1;
-                break;          
+        const type = activity.type;
+        if(!(type in totals)){
+            totals[type] = {};
+            totals[type].climb = activity.total_elevation_gain | 0;
+            totals[type].distance = activity.distance | 0;
+            totals[type].hours = activity.moving_time/60/60 | 0;
+            totals[type].pr = activity.pr_count | 0;
+            totals[type].kudos = activity.kudos_count | 0;
+            totals[type].count = 1;
+        } else {
+            totals[type].climb += activity.total_elevation_gain | 0;
+            totals[type].distance += activity.distance | 0;
+            totals[type].hours += activity.moving_time/60/60 | 0;
+            totals[type].pr += activity.pr_count | 0;
+            totals[type].kudos += activity.kudos_count | 0;
+            totals[type].count += 1;
         }
     }
     localStorage.setItem(storeAs, JSON.stringify(totals))
@@ -389,6 +342,19 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
     return best;
 }
 
+function getSportsDuration(storedAs='activities', storeAs='sport-duration'){
+    const activities = JSON.parse(localStorage.getItem(storedAs));
+    const sportDuration = {};
+    for(const activity of activities){
+        if(sportDuration[activity.sport_type] === undefined){
+            sportDuration[activity.sport_type] = activity.moving_time;
+        } else {
+            sportDuration[activity.sport_type] += activity.moving_time;
+        }
+    }
+    localStorage.setItem(storeAs, JSON.stringify(sportDuration));
+}
+
 function dataReady(){
     document.querySelector('.loading').style.opacity = 0;
     setTimeout(() => {
@@ -408,6 +374,60 @@ document.querySelector('.ready a').addEventListener('click', (e) => {
     }
     button.href = 'landing.html';
 })
+
+localStorage.setItem('sport-icons', JSON.stringify({
+    AlpineSki: '/images/sports/ski.svg',
+    BackcountrySki: '/images/sports/ski.svg',
+    Canoeing: '/images/sports/canoe.svg',
+    Crossfit: '/images/sports/crossfit.svg',
+    EBikeRide: '/images/sports/elec-bike.svg',
+    Elliptical: '/images/sports/bike.svg',
+    EMountainBikeRide: '/images/sports/elec-bike.svg',
+    Golf: '/images/sports/golf.svg',
+    GravelRide: '/images/sports/bike.svg',
+    Handcycle: '/images/sports/handbike.svg',
+    Hike: '/images/sports/hiking.svg',
+    IceSkate: '/images/sports/ice-skating.svg',
+    InlineSkate: '/images/sports/roller-blading.svg',
+    Kayaking: '/images/sports/canoe.svg',
+    Kitesurf: '/images/sports/kitesurf.svg',
+    MountainBikeRide: '/images/sports/bike.svg',
+    NordicSki: '/images/sports/ski.svg',
+    Ride: '/images/sports/bike.svg',
+    RockClimbing: '/images/sports/climb.svg',
+    RollerSki: '/images/sports/ski.svg',
+    Rowing: '/images/sports/rowing.svg',
+    Run: '/images/sports/run.svg',
+    Sail: '/images/sports/sail.svg',
+    Skateboard: '/images/sports/skateboard.svg',
+    Snowboard: '/images/sports/snowboard.svg',
+    Snowshoe: '/images/sports/snowshoes.svg',
+    Soccer: '/images/sports/soccer.svg',
+    StairStepper: '/images/sports/stairs.svg',
+    StandUpPaddling: '/images/sports/paddle.svg',
+    Surfing: '/images/sports/surf.svg',
+    Swim: '/images/sports/swim.svg',
+    TrailRun: '/images/sports/run.svg',
+    Velomobile: '/images/sports/mobile-bike.svg',
+    VirtualRide: '/images/sports/bike.svg',
+    VirtualRun: '/images/sports/run.svg',
+    Walk: '/images/sports/walk.svg',
+    WeightTraining: '/images/sports/workout.svg',
+    Wheelchair: '/images/sports/wheelchair.svg',
+    Windsurf: '/images/sports/surf.svg',
+    Workout: '/images/sports/workout.svg',
+    Yoga: '/images/sports/yoga.svg'
+}));
+
+localStorage.setItem('sport-languages', JSON.stringify({
+    "fr": {
+        "Ride" : "Cyclisme",
+        "MountainBikeRide" : "VTT",
+        "Run" : "Course",
+        "Hike" : "Randonnée",
+        "Swim" : "Natation"
+    }
+}));
 
 checkCredentials()
     .then(async () => {
@@ -442,6 +462,7 @@ checkCredentials()
 
                 localStorage.setItem('most-kudoed', getMostKudoed());
 
+                getSportsDuration();
                 getEquipments();
                 const bestBike = getBestEquipment('ride');
                 const bestShoes = getBestEquipment('run');
