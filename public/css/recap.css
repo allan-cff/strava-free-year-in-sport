@@ -55,7 +55,7 @@
     background-color: #002E51;
     color:white;
     display:flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: center;
 }
 

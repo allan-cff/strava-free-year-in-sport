@@ -12,6 +12,10 @@
     height:50%;
 }
 
+.sport-2 svg {
+    fill:white;
+}
+
 .sport-2 {
     background-color : #002E51;
     height:50%;
@@ -52,12 +56,6 @@
     padding-top : 2vh;
 }
 
-
-
-.sport-1 img {
-    stroke:black;
-}
-
 .moyenne {
     height:12vh;
     background-color: #495227;
@@ -68,6 +66,10 @@
     padding: 0 5vw 0 5vw;
 }
 
+.moyenne svg {
+    fill:white;
+}
+
 .sport-moyenne {
     display:flex;
     flex-direction: row;
@@ -75,6 +77,7 @@
 
 .sport-2-moyenne {
     text-align: end;
+    flex-direction: row-reverse;
 }
 
 .icone-moyenne {

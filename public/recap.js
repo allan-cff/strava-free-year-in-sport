@@ -39,4 +39,4 @@ document.querySelector('.denivele .nombre-md').innerHTML = totals.total.climb.to
 document.querySelector('.distance .nombre-md').innerHTML = (totals.total.distance/1000).toFixed(0);
 document.querySelector('.heures .nombre-md').innerHTML = (totals.total.hours).toFixed(0);
 
-setIcon('.top-sport h2', sportsArray[0], languages.fr[sportsArray[0]] || sportsArray[0])
+setIcon('.top-sport', sportsArray[0], languages.fr[sportsArray[0]] || sportsArray[0])
