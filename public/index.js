@@ -370,7 +370,7 @@ document.querySelector('.ready a').addEventListener('click', (e) => {
     let button = e.target;
     button.style.display = "none";
     document.querySelector('iframe').style.display = "block";
-    document.querySelector('iframe').requestFullscreen();
+    //document.querySelector('iframe').requestFullscreen();
 })
 
 localStorage.setItem('sport-icons', JSON.stringify({
