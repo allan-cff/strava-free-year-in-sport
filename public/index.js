@@ -362,16 +362,10 @@ function dataReady(){
         document.querySelector('.ready').style.display = 'block';
         setTimeout(() => {
             document.querySelector('.ready').style.opacity = 1;
+            document.querySelector('.ready a').href = 'landing.html'
         }, 250);
     }, 250);
 }
-
-document.querySelector('.ready a').addEventListener('click', (e) => {
-    let button = e.target;
-    button.style.display = "none";
-    document.querySelector('iframe').style.display = "block";
-    //document.querySelector('iframe').requestFullscreen();
-})
 
 localStorage.setItem('sport-icons', JSON.stringify({
     AlpineSki: '/images/sports/ski.svg',
