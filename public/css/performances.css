@@ -62,7 +62,7 @@ h2 {
     height : 20vh;
     background-color: #C0CA53;
     display:flex;
-
+    position:relative;
 }
 
 #everest>p {
@@ -73,7 +73,9 @@ h2 {
 }
 
 #everest div {
-    padding-top : 3vh;
+    position : absolute;
+    bottom : 0;
+    right : 5vw;
     background-image: url(../images/haute-montagne-large_1.svg);
     background-position: bottom;
     background-repeat:no-repeat;
