@@ -148,3 +148,11 @@ progress::-moz-progress-bar {
     opacity: 1;
     display: block;
 }
+
+iframe {
+    display: none;
+    height: 30vh;
+    width: 30vw;
+    margin: 0 50vw;
+    border-width: 0;
+}

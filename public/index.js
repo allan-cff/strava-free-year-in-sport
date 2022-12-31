@@ -368,11 +368,9 @@ function dataReady(){
 
 document.querySelector('.ready a').addEventListener('click', (e) => {
     let button = e.target;
-    let requestMethod = button.requestFullScreen || button.webkitRequestFullScreen || button.mozRequestFullScreen || button.msRequestFullScreen;
-    if (requestMethod) {
-        requestMethod.call(document.body);
-    }
-    button.href = 'landing.html';
+    button.style.display = "none";
+    document.querySelector('iframe').style.display = "block";
+    document.querySelector('iframe').requestFullscreen();
 })
 
 localStorage.setItem('sport-icons', JSON.stringify({
