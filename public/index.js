@@ -329,7 +329,7 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
             return currentValue;
         }
         if(currentValue.sport === sportType && maxValue.sport === sportType){
-            if(currentValue.hours > maxValue.hours){
+            if(currentValue.year_hours > maxValue.year_hours){
                 return currentValue;
             }    
             return maxValue;
@@ -362,18 +362,10 @@ function dataReady(){
         document.querySelector('.ready').style.display = 'block';
         setTimeout(() => {
             document.querySelector('.ready').style.opacity = 1;
+            document.querySelector('.ready a').href = 'landing.html'
         }, 250);
     }, 250);
 }
-
-document.querySelector('.ready a').addEventListener('click', (e) => {
-    let button = e.target;
-    let requestMethod = button.requestFullScreen || button.webkitRequestFullScreen || button.mozRequestFullScreen || button.msRequestFullScreen;
-    if (requestMethod) {
-        requestMethod.call(document.body);
-    }
-    button.href = 'landing.html';
-})
 
 localStorage.setItem('sport-icons', JSON.stringify({
     AlpineSki: '/images/sports/ski.svg',
