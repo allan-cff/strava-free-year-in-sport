@@ -450,6 +450,7 @@ checkCredentials()
                 for(const id of bestPicturesActivitiesId){
                     waitForProgress(getDetailledActivity(id), 'progress', 5)
                 }
+                progress.value = parseInt(progress.value, 10) + (4-bestPicturesActivitiesId.length)*5;
             
                 getTotals();
 
