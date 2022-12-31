@@ -325,20 +325,20 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
     const equipments = JSON.parse(localStorage.getItem(storedAs));
     sportType = sportType.toLowerCase();
     const best = Object.values(equipments).reduce((maxValue, currentValue) => {
-        if(currentValue.sport === sportType && maxValue.sport !== sportType){
-            return currentValue;
-        }
-        if(currentValue.sport === sportType && maxValue.sport === sportType){
-            if(currentValue.year_hours > maxValue.year_hours){
+        if(maxValue === null || maxValue.type !== sportType){
+            if(currentValue.sport === sportType){
                 return currentValue;
-            }    
+            }
+            return null;
+        }
+        if(currentValue.sport !== sportType){
             return maxValue;
+        }
+        if(currentValue.year_hours > maxValue.year_hours){
+            return currentValue;
         }
         return maxValue;
     })
-    if(best.sport !== sportType){
-        return null;
-    }
     return best;
 }
 
