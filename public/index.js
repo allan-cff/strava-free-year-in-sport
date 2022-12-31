@@ -155,60 +155,54 @@ async function getUserActivities(startDate, endDate, options={storeAs : 'activit
 async function getDetailledActivity(id){
     console.log('Getting detailled activity ', id);
     if(localStorage.getItem(id)){
-        return JSON.parse(localStorage.getItem(id));
+        console.log('Successfully got detailled activity ', id);
+        return;
     }
     const token = sessionStorage.getItem('user_token');
-    fetch(`https://www.strava.com/api/v3/activities/${id}?include_all_efforts=true`, {
+    const response = await fetch(`https://www.strava.com/api/v3/activities/${id}?include_all_efforts=true`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
         method: 'GET'
-    }).then(response => {
-        if(response.status === 401){
-            console.log(response);
-            checkCredentials();
-        }
-        if(response.status === 429){
-            console.log(response);
-            tooManyRequests();
-        }
-        if(response.status === 200){
-            response.json().then(res => {
-                localStorage.setItem(id.toString(10), JSON.stringify(res));
-                console.log('Successfully got detailled activity ', id);
-            });
-        }    
     });
+    if(response.status === 401){
+        console.log(response);
+        checkCredentials();
+    }
+    if(response.status === 429){
+        console.log(response);
+        tooManyRequests();
+    }
+    if(response.status === 200){
+        const res = await response.json();
+        localStorage.setItem(id.toString(10), JSON.stringify(res));
+        console.log('Successfully got detailled activity ', id);
+    }
 }
 
-function getDetailledEquipment(equipment){
+async function getDetailledEquipment(equipment){
     console.log('Getting detailled equipment ', equipment.id);
-    if(localStorage.getItem(equipment.id)){
-        return JSON.parse(localStorage.getItem(equipment.id));
-    }
     const token = sessionStorage.getItem('user_token');
-    fetch(`https://www.strava.com/api/v3/gear/${equipment.id}`, {
+    const response = await fetch(`https://www.strava.com/api/v3/gear/${equipment.id}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
         method: 'GET'
-    }).then(response => {
-        if(response.status === 401){
-            console.log(response);
-            checkCredentials();
-        }
-        if(response.status === 429){
-            console.log(response);
-            tooManyRequests();
-        }
-        if(response.status === 200){
-            response.json().then(res => {
-                equipment
-                localStorage.setItem(equipment.id, JSON.stringify(Object.assign(equipment, res)));
-                console.log('Successfully got detailled equipment ', equipment.id);
-            });
-        }    
     });
+    if(response.status === 401){
+        console.log(response);
+        checkCredentials();
+    }
+    if(response.status === 429){
+        console.log(response);
+        tooManyRequests();
+    }
+    if(response.status === 200){
+        const res = await response.json();
+        console.log(res);
+        localStorage.setItem(equipment.id, JSON.stringify(Object.assign(equipment, res)));
+        console.log('Successfully got detailled equipment ', equipment.id);
+    }
 }
 
 function sortByKudos(storedAs='activities'){
@@ -413,6 +407,15 @@ localStorage.setItem('sport-icons', JSON.stringify({
     Yoga: '/images/sports/yoga.svg'
 }));
 
+async function waitForProgress(asyncCall, progressSelector, progressAdvance){
+    await asyncCall;
+    const progress = document.querySelector(progressSelector);
+    progress.value = parseInt(progress.value, 10) + progressAdvance;
+    if(progress.value === 100){
+        setTimeout(dataReady, 300);
+    }
+}
+
 localStorage.setItem('sport-languages', JSON.stringify({
     "fr": {
         "Ride" : "Cyclisme",
@@ -439,20 +442,16 @@ checkCredentials()
 
         getUserActivities(Date.parse("2022-01-01T00:00:00.000"), Date.parse("2023-01-01T00:00:00.000"))
             .then(() => {
-                progress.value = parseInt(progress.value, 10) + 35;
+                progress.value = parseInt(progress.value, 10) + 30;
                 console.log(progress.value);
                 const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
                 localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
                 
                 for(const id of bestPicturesActivitiesId){
-                    getDetailledActivity(id);
+                    waitForProgress(getDetailledActivity(id), 'progress', 5)
                 }
-                progress.value = parseInt(progress.value, 10) + 10;
-                console.log(progress.value);
             
                 getTotals();
-                progress.value = parseInt(progress.value, 10) + 5;
-                console.log(progress.value);
 
                 localStorage.setItem('most-kudoed', getMostKudoed());
 
@@ -462,12 +461,15 @@ checkCredentials()
                 const bestShoes = getBestEquipment('run');
                 
                 if(bestBike !== null){
-                    getDetailledEquipment(bestBike);
+                    waitForProgress(getDetailledEquipment(bestBike), 'progress', 5)
+                } else {
+                    progress.value = parseInt(progress.value, 10) + 5;
                 }
                 if(bestShoes !== null){
-                    getDetailledEquipment(bestShoes);
+                    waitForProgress(getDetailledEquipment(bestShoes), 'progress', 5)
+                } else {
+                    progress.value = parseInt(progress.value, 10) + 5;
                 }
-
                 if(progress.value === 100){
                     setTimeout(dataReady, 300);
                 }
@@ -475,11 +477,9 @@ checkCredentials()
 
         getUserActivities(Date.parse("2021-01-01T00:00:00.000"), Date.parse("2022-01-01T00:00:00.000"), {storeAs : '2021-activities'})
             .then(() => {
-                progress.value = parseInt(progress.value, 10) + 35;
+                progress.value = parseInt(progress.value, 10) + 30;
                 console.log(progress.value);
                 getTotals('2021-activities', '2021-totals');
-                progress.value = parseInt(progress.value, 10) + 5;
-                console.log(progress.value);
                 if(progress.value === 100){
                     setTimeout(dataReady, 300);
                 }
