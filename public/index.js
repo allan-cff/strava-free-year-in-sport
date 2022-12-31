@@ -329,7 +329,7 @@ function getBestEquipment(sportType, storedAs = 'equipments'){
             return currentValue;
         }
         if(currentValue.sport === sportType && maxValue.sport === sportType){
-            if(currentValue.hours > maxValue.hours){
+            if(currentValue.year_hours > maxValue.year_hours){
                 return currentValue;
             }    
             return maxValue;
