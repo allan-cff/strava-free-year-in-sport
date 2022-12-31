@@ -20,7 +20,7 @@ main {
 
 header {
     background-color:black;
-    height:9vh;
+    height:5vh;
     display :flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -42,8 +42,6 @@ header p {
 
 footer {
     height:9vh;
-    position:fixed;
-    bottom:0;
     display:flex;
     justify-content:space-between;
     background-color:black;
