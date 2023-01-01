@@ -71,7 +71,11 @@ for(let i = 1; i < 5; i++){
             maxPercentageSport = key;
         }
     }
-    document.querySelector(`body main .top-sport #top-${i} p`).innerHTML = `${(maxPercentage*100).toFixed(0)}%<br>${languages.fr[maxPercentageSport] || maxPercentageSport}`;
-    setIcon(`body main .top-sport #top-${i} .sport-${i}`, maxPercentageSport, languages.fr[maxPercentageSport] || maxPercentageSport)
-    delete sportPercentage[maxPercentageSport];
+    if(maxPercentage !== 0){
+        document.querySelector(`body main .top-sport #top-${i} p`).innerHTML = `${(maxPercentage*100).toFixed(0)}%<br>${languages.fr[maxPercentageSport] || maxPercentageSport}`;
+        setIcon(`body main .top-sport #top-${i} .sport-${i}`, maxPercentageSport, languages.fr[maxPercentageSport] || maxPercentageSport)
+        delete sportPercentage[maxPercentageSport];
+    } else {
+        document.querySelector(`body main .top-sport #top-${i}`).remove();
+    }
 }
