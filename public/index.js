@@ -241,11 +241,11 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
     };
     const activities = JSON.parse(localStorage.getItem(storedAs));
     for(const activity of activities){
-        totals.total.climb += activity.total_elevation_gain;
-        totals.total.distance += activity.distance;
-        totals.total.hours += activity.moving_time/60/60;
-        totals.total.pr += activity.pr_count;
-        totals.total.kudos += activity.kudos_count;
+        totals.total.climb += activity.total_elevation_gain | 0;
+        totals.total.distance += activity.distance | 0;
+        totals.total.hours += activity.moving_time/60/60 | 0;
+        totals.total.pr += activity.pr_count | 0;
+        totals.total.kudos += activity.kudos_count | 0;
         totals.total.count += 1;
         if("average_heartrate" in activity){
             totals.heartrate.count += 1;
