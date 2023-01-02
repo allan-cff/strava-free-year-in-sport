@@ -457,7 +457,7 @@ checkCredentials()
             .then(() => {
                 progress.value = parseInt(progress.value, 10) + 30;
                 console.log(progress.value);
-                const bestPicturesActivitiesId = [7653016288, 7789915147];//getMostKudoedPicturesActivityId();
+                const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
                 localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
                 
                 for(const id of bestPicturesActivitiesId){
