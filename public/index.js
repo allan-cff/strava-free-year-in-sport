@@ -241,11 +241,17 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
     };
     const activities = JSON.parse(localStorage.getItem(storedAs));
     for(const activity of activities){
-        totals.total.climb += activity.total_elevation_gain | 0;
-        totals.total.distance += activity.distance | 0;
-        totals.total.hours += activity.moving_time/60/60 | 0;
-        totals.total.pr += activity.pr_count | 0;
-        totals.total.kudos += activity.kudos_count | 0;
+        if('total_elevation_gain' in activity){
+            totals.total.climb += activity.total_elevation_gain;
+        }
+        if('distance' in activity){
+            totals.total.distance += activity.distance;
+        }
+        if('moving_time' in activity){
+            totals.total.hours += activity.moving_time/60/60;
+        }
+        totals.total.pr += activity.pr_count;
+        totals.total.kudos += activity.kudos_count;
         totals.total.count += 1;
         if("average_heartrate" in activity){
             totals.heartrate.count += 1;
@@ -258,18 +264,30 @@ function getTotals(storedAs = 'activities', storeAs = 'totals'){
         const type = activity.type;
         if(!(type in totals)){
             totals[type] = {};
-            totals[type].climb = activity.total_elevation_gain | 0;
-            totals[type].distance = activity.distance | 0;
-            totals[type].hours = activity.moving_time/60/60 | 0;
-            totals[type].pr = activity.pr_count | 0;
-            totals[type].kudos = activity.kudos_count | 0;
+            if('total_elevation_gain' in activity){
+                totals[type].climb = activity.total_elevation_gain;
+            }
+            if('distance' in activity){
+                totals[type].distance = activity.distance;
+            }
+            if('moving_time' in activity){
+                totals[type].hours = activity.moving_time/60/60;
+            }
+            totals[type].pr = activity.pr_count;
+            totals[type].kudos = activity.kudos_count;
             totals[type].count = 1;
         } else {
-            totals[type].climb += activity.total_elevation_gain | 0;
-            totals[type].distance += activity.distance | 0;
-            totals[type].hours += activity.moving_time/60/60 | 0;
-            totals[type].pr += activity.pr_count | 0;
-            totals[type].kudos += activity.kudos_count | 0;
+            if('total_elevation_gain' in activity){
+                totals[type].climb += activity.total_elevation_gain;
+            }
+            if('distance' in activity){
+                totals[type].distance += activity.distance;
+            }
+            if('moving_time' in activity){
+                totals[type].hours += activity.moving_time/60/60;
+            }
+            totals[type].pr += activity.pr_count;
+            totals[type].kudos += activity.kudos_count;
             totals[type].count += 1;
         }
     }
