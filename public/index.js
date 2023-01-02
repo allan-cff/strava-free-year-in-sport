@@ -407,15 +407,6 @@ localStorage.setItem('sport-icons', JSON.stringify({
     Yoga: '/images/sports/yoga.svg'
 }));
 
-async function waitForProgress(asyncCall, progressSelector, progressAdvance){
-    await asyncCall;
-    const progress = document.querySelector(progressSelector);
-    progress.value = parseInt(progress.value, 10) + progressAdvance;
-    if(progress.value === 100){
-        setTimeout(dataReady, 300);
-    }
-}
-
 localStorage.setItem('sport-languages', JSON.stringify({
     "fr": {
         "Ride" : "Cyclisme",
@@ -425,6 +416,28 @@ localStorage.setItem('sport-languages', JSON.stringify({
         "Swim" : "Natation"
     }
 }));
+
+async function waitForProgress(asyncCall, progressSelector, progressAdvance){
+    await asyncCall;
+    const progress = document.querySelector(progressSelector);
+    progress.value = parseInt(progress.value, 10) + progressAdvance;
+    if(progress.value === 100){
+        setTimeout(dataReady, 300);
+    }
+}
+
+document.querySelector('.reload a').addEventListener('click', () => {
+    localStorage.removeItem('activities')
+    localStorage.removeItem('2021-activities')
+    localStorage.removeItem('totals')
+    localStorage.removeItem('2021-totals')
+    localStorage.removeItem('most-kudoed')
+    localStorage.removeItem('user')
+    localStorage.removeItem('best_pictures')
+    localStorage.removeItem('equipments')
+    localStorage.removeItem('sport-duration')
+    location.reload();
+});
 
 checkCredentials()
     .then(async () => {
@@ -444,7 +457,7 @@ checkCredentials()
             .then(() => {
                 progress.value = parseInt(progress.value, 10) + 30;
                 console.log(progress.value);
-                const bestPicturesActivitiesId = getMostKudoedPicturesActivityId();
+                const bestPicturesActivitiesId = [7653016288, 7789915147];//getMostKudoedPicturesActivityId();
                 localStorage.setItem('best_pictures', JSON.stringify(bestPicturesActivitiesId));
                 
                 for(const id of bestPicturesActivitiesId){

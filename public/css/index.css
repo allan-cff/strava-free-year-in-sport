@@ -129,6 +129,21 @@ progress::-moz-progress-bar {
     font-family: 'Karla';
 }
 
+.reload a {
+    background-color: #b50000;
+    color: #ffff;
+    text-decoration: none;
+    padding: 0.5em 5vw;
+    border: none;
+    border-radius: 1vw;
+    font-size: 35px;
+    font-family: 'Karla';
+}
+
+.reload {
+    margin-top: 5vh;
+}
+
 .ready p {
     margin : 0.5em;
 }
